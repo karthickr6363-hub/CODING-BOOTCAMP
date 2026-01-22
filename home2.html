@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - TechBootcamp</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Student Portal Specific Styles */
+        .student-hero {
+            background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .grid-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 229, 196, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 196, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .stat-card-portal {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(0, 229, 196, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card-portal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 229, 196, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .stat-card-portal:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-teal);
+            box-shadow: 0 15px 35px rgba(0, 229, 196, 0.2);
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            color: var(--neon-teal);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-number-portal {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--cloud-white);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label-portal {
+            color: rgba(245, 247, 251, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--neon-teal);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--neon-teal);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(0, 229, 196, 0.5);
+        }
+        
+        .timeline-content {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 45%;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-content:hover {
+            transform: scale(1.02);
+            border-color: rgba(0, 229, 196, 0.3);
+        }
+        
+        .class-card {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .class-card:hover {
+            border-color: var(--neon-teal);
+            transform: translateX(5px);
+        }
+        
+        .mentor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--neon-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--midnight-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .certification-step {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .certification-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--neon-teal);
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item::before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+            
+            .certification-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -30px;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+   <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-code-slash"></i> TechBootcamp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Home
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                            <li><a class="dropdown-item" href="index.html">Home 1 - Future Developer Mode</a></li>
+                            <li><a class="dropdown-item" href="home2.html">Home 2 - Student Portal</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="career.html">Career</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admissions.html">Admissions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reviews.html">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                            <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Student Hero Section -->
+    <section class="student-hero">
+        <div class="grid-background"></div>
+        <div class="container position-relative">
+            <div class="row min-vh-100 align-items-center">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1 class="display-4 fw-bold mb-4">
+                            Learning Console
+                        </h1>
+                        <p class="lead mb-5">
+                            Track your progress and manage your coding journey
+                        </p>
+                        
+                        <!-- Stats Grid -->
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-3">
+                                <div class="stat-card-portal">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-book"></i>
+                                    </div>
+                                    <div class="stat-number-portal">3</div>
+                                    <div class="stat-label-portal">Active Courses</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card-portal">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                    <div class="stat-number-portal">2</div>
+                                    <div class="stat-label-portal">Assignments Due</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card-portal">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-graph-up-arrow"></i>
+                                    </div>
+                                    <div class="stat-number-portal">78%</div>
+                                    <div class="stat-label-portal">Learning Progress</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card-portal">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-trophy"></i>
+                                    </div>
+                                    <div class="stat-number-portal">5</div>
+                                    <div class="stat-label-portal">Certificates Earned</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="dashboard.html" class="btn btn-primary btn-lg">
+                            Enter Student Portal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Timeline -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Your Learning Journey</h2>
+                <p class="lead">From enrollment to career success</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="stat-icon me-3">
+                                <i class="bi bi-person-plus"></i>
+                            </div>
+                            <div>
+                                <h4>Enroll</h4>
+                                <p class="mb-0">Choose your program and start your journey</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="stat-icon me-3">
+                                <i class="bi bi-mortarboard"></i>
+                            </div>
+                            <div>
+                                <h4>Learn</h4>
+                                <p class="mb-0">Master skills through hands-on projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="stat-icon me-3">
+                                <i class="bi bi-code-square"></i>
+                            </div>
+                            <div>
+                                <h4>Build Projects</h4>
+                                <p class="mb-0">Create a portfolio of real-world applications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="stat-icon me-3">
+                                <i class="bi bi-briefcase"></i>
+                            </div>
+                            <div>
+                                <h4>Get Hired</h4>
+                                <p class="mb-0">Land your dream job with career support</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Classes Preview -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Live Classes</h2>
+                <p class="lead">Join interactive sessions with expert mentors</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="text-teal mb-4">Upcoming Sessions</h4>
+                    
+                    <div class="class-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5>React Hooks Deep Dive</h5>
+                                <p class="mb-1">Today, 3:00 PM EST</p>
+                                <small>with Sarah Johnson</small>
+                            </div>
+                            <button class="btn btn-primary">Join</button>
+                        </div>
+                    </div>
+                    
+                    <div class="class-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5>Database Design Patterns</h5>
+                                <p class="mb-1">Tomorrow, 2:00 PM EST</p>
+                                <small>with Michael Chen</small>
+                            </div>
+                            <button class="btn btn-outline-light">Schedule</button>
+                        </div>
+                    </div>
+                    
+                    <div class="class-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5>Python for Data Science</h5>
+                                <p class="mb-1">Friday, 4:00 PM EST</p>
+                                <small>with Emily Davis</small>
+                            </div>
+                            <button class="btn btn-outline-light">Schedule</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <h4 class="text-teal mb-4">Your Mentors</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="text-center">
+                                <div class="mentor-avatar mx-auto mb-2">SJ</div>
+                                <h5>Sarah Johnson</h5>
+                                <p class="small">Full Stack Expert</p>
+                                <p class="small text-muted">10+ years at Google, Meta</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="text-center">
+                                <div class="mentor-avatar mx-auto mb-2">MC</div>
+                                <h5>Michael Chen</h5>
+                                <p class="small">Data Science Lead</p>
+                                <p class="small text-muted">Former Amazon ML Engineer</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="text-center">
+                                <div class="mentor-avatar mx-auto mb-2">ED</div>
+                                <h5>Emily Davis</h5>
+                                <p class="small">Python Specialist</p>
+                                <p class="small text-muted">MIT Research Background</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="text-center">
+                                <div class="mentor-avatar mx-auto mb-2">JW</div>
+                                <h5>James Wilson</h5>
+                                <p class="small">Cloud Architect</p>
+                                <p class="small text-muted">AWS Certified Expert</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certification Path -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Certification Path</h2>
+                <p class="lead">Your roadmap to professional success</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="certification-step">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <h4>Course</h4>
+                        <p>Complete comprehensive curriculum</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="certification-step">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-code-square"></i>
+                        </div>
+                        <h4>Project</h4>
+                        <p>Build real-world applications</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="certification-step">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-award"></i>
+                        </div>
+                        <h4>Certificate</h4>
+                        <p>Earn industry-recognized credentials</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="certification-step">
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-briefcase"></i>
+                        </div>
+                        <h4>Job Support</h4>
+                        <p>Get career placement assistance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="py-5 bg-primary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="display-6 fw-bold">Ready to Start Learning?</h2>
+                    <p class="lead mb-0">Access your student portal and continue your journey</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="dashboard.html" class="btn btn-light btn-lg">Access Portal</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light me-3">Privacy</a>
+                    <a href="#" class="text-light me-3">Terms</a>
+                    <a href="#" class="text-light">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Student Portal Specific Animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stat cards on scroll
+            gsap.utils.toArray('.stat-card-portal').forEach((card, index) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.8,
+                    scale: 0.8,
+                    opacity: 0,
+                    delay: index * 0.1,
+                    ease: 'back.out(1.7)'
+                });
+            });
+            
+            // Timeline animation
+            gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.8,
+                    x: index % 2 === 0 ? -50 : 50,
+                    opacity: 0,
+                    delay: index * 0.2,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Certification path animation
+            gsap.utils.toArray('.certification-step').forEach((step, index) => {
+                gsap.from(step, {
+                    scrollTrigger: {
+                        trigger: step,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.6,
+                    y: 30,
+                    opacity: 0,
+                    delay: index * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

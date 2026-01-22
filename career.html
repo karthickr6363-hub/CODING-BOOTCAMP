@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Support - TechBootcamp</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Career Page Specific Styles */
+        .career-hero {
+            background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
+            padding: 8rem 0 4rem;
+        }
+        
+        .service-card {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--neon-teal);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-teal);
+            box-shadow: 0 20px 40px rgba(0, 229, 196, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 4rem;
+            color: var(--neon-teal);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-title {
+            color: var(--cloud-white);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .service-description {
+            color: rgba(245, 247, 251, 0.8);
+            margin-bottom: 2rem;
+        }
+        
+        .service-features {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .service-features li {
+            color: rgba(245, 247, 251, 0.7);
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .service-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--neon-teal);
+        }
+        
+        .process-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--neon-teal);
+            transform: translateX(-50%);
+        }
+        
+        .process-step {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 1rem;
+            width: 16px;
+            height: 16px;
+            background: var(--neon-teal);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(0, 229, 196, 0.5);
+        }
+        
+        .process-content {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 45%;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:nth-child(odd) .process-content {
+            margin-left: auto;
+        }
+        
+        .process-content:hover {
+            border-color: var(--neon-teal);
+            transform: scale(1.02);
+        }
+        
+        .partner-logo {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .partner-logo:hover {
+            border-color: var(--neon-teal);
+            transform: translateY(-5px);
+        }
+        
+        .partner-logo i {
+            font-size: 3rem;
+            color: var(--neon-teal);
+        }
+        
+        .stats-highlight {
+            background: rgba(0, 229, 196, 0.1);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(0, 229, 196, 0.2);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number-large {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--neon-teal);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label-large {
+            color: var(--cloud-white);
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-career {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            color: rgba(245, 247, 251, 0.9);
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--neon-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--midnight-blue);
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .author-info h6 {
+            color: var(--neon-teal);
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info small {
+            color: rgba(245, 247, 251, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .process-timeline::before {
+                left: 30px;
+            }
+            
+            .process-step::before {
+                left: 30px;
+            }
+            
+            .process-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-code-slash"></i> TechBootcamp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Home
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                            <li><a class="dropdown-item" href="index.html">Home 1 - Future Developer Mode</a></li>
+                            <li><a class="dropdown-item" href="home2.html">Home 2 - Student Portal</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="career.html">Career</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admissions.html">Admissions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reviews.html">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                            <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Career Hero -->
+    <section class="career-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Career Support Services</h1>
+                    <p class="lead mb-4">Comprehensive career guidance to help you land your dream tech job</p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <div class="stat-card">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">Job Placement Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Our Career Services</h2>
+                <p class="lead">Everything you need to succeed in your tech career</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Resume Builder -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h3 class="service-title">Resume Builder</h3>
+                        <p class="service-description">Create a professional resume that stands out to tech recruiters</p>
+                        <ul class="service-features">
+                            <li>ATS-optimized templates</li>
+                            <li>Technical skills showcase</li>
+                            <li>Project highlights</li>
+                            <li>Expert review & feedback</li>
+                        </ul>
+                        <button class="btn btn-primary">Get Started</button>
+                    </div>
+                </div>
+
+                <!-- Mock Interviews -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-camera-video"></i>
+                        </div>
+                        <h3 class="service-title">Mock Interviews</h3>
+                        <p class="service-description">Practice with industry professionals and gain confidence</p>
+                        <ul class="service-features">
+                            <li>Technical interviews</li>
+                            <li>Behavioral questions</li>
+                            <li>Live coding sessions</li>
+                            <li>Performance feedback</li>
+                        </ul>
+                        <button class="btn btn-primary">Schedule Session</button>
+                    </div>
+                </div>
+
+                <!-- Hiring Network -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h3 class="service-title">Hiring Network</h3>
+                        <p class="service-description">Connect with 500+ hiring partners and tech companies</p>
+                        <ul class="service-features">
+                            <li>Direct job referrals</li>
+                            <li>Company networking events</li>
+                            <li>Recruiter connections</li>
+                            <li>Exclusive job board</li>
+                        </ul>
+                        <button class="btn btn-primary">Browse Jobs</button>
+                    </div>
+                </div>
+
+                <!-- Internship Program -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-briefcase"></i>
+                        </div>
+                        <h3 class="service-title">Internship Program</h3>
+                        <p class="service-description">Gain real-world experience with partner companies</p>
+                        <ul class="service-features">
+                            <li>Paid internships</li>
+                            <li>Remote & on-site options</li>
+                            <li>Academic credit</li>
+                            <li>Full-time conversion</li>
+                        </ul>
+                        <button class="btn btn-primary">Apply Now</button>
+                    </div>
+                </div>
+
+                <!-- Portfolio Builder -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-folder"></i>
+                        </div>
+                        <h3 class="service-title">Portfolio Builder</h3>
+                        <p class="service-description">Showcase your projects and technical skills</p>
+                        <ul class="service-features">
+                            <li>Project hosting</li>
+                            <li>Code repositories</li>
+                            <li>Live demos</li>
+                            <li>Personal branding</li>
+                        </ul>
+                        <button class="btn btn-primary">Build Portfolio</button>
+                    </div>
+                </div>
+
+                <!-- Career Coaching -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h3 class="service-title">Career Coaching</h3>
+                        <p class="service-description">1-on-1 guidance from experienced career coaches</p>
+                        <ul class="service-features">
+                            <li>Career path planning</li>
+                            <li>Salary negotiation</li>
+                            <li>Industry insights</li>
+                            <li>Personal mentorship</li>
+                        </ul>
+                        <button class="btn btn-primary">Book Session</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Process Timeline -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Your Career Journey</h2>
+                <p class="lead">Step-by-step process from graduation to employment</p>
+            </div>
+            
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="process-content">
+                        <h4 class="text-teal mb-3">1. Skills Assessment</h4>
+                        <p>Evaluate your technical skills and identify areas for improvement</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-content">
+                        <h4 class="text-teal mb-3">2. Resume & Portfolio</h4>
+                        <p>Build professional resume and showcase your best projects</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-content">
+                        <h4 class="text-teal mb-3">3. Interview Preparation</h4>
+                        <p>Practice technical and behavioral interviews with experts</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-content">
+                        <h4 class="text-teal mb-3">4. Job Applications</h4>
+                        <p>Apply to curated opportunities through our hiring network</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-content">
+                        <h4 class="text-teal mb-3">5. Offer Negotiation</h4>
+                        <p>Get help negotiating salary and benefits packages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Highlight -->
+    <section class="py-5">
+        <div class="container">
+            <div class="stats-highlight">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number-large">$85K</div>
+                            <div class="stat-label-large">Average Starting Salary</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number-large">3.5</div>
+                            <div class="stat-label-large">Months to Job Placement</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number-large">500+</div>
+                            <div class="stat-label-large">Hiring Partners</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number-large">1000+</div>
+                            <div class="stat-label-large">Successful Graduates</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hiring Partners -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Trusted by Leading Companies</h2>
+                <p class="lead">Our graduates work at top tech companies worldwide</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-google"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-microsoft"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-amazon"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-apple"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-facebook"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-twitter"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-linkedin"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="partner-logo">
+                        <i class="bi bi-github"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Career Success Stories</h2>
+                <p class="lead">Hear from graduates who landed their dream jobs</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="testimonial-career">
+                        <div class="testimonial-content">
+                            "The career support team helped me transform my resume and prepare for technical interviews. I landed a job at Google with a 65% salary increase!"
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AK</div>
+                            <div class="author-info">
+                                <h6>Alex Kumar</h6>
+                                <small>Software Engineer at Google</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="testimonial-career">
+                        <div class="testimonial-content">
+                            "The mock interview sessions were invaluable. I gained confidence and learned how to showcase my projects effectively. Now I'm working at Microsoft!"
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SR</div>
+                            <div class="author-info">
+                                <h6>Sarah Rodriguez</h6>
+                                <small>Full Stack Developer at Microsoft</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="testimonial-career">
+                        <div class="testimonial-content">
+                            "The hiring network connected me with amazing opportunities. I had multiple offers and could choose the best fit for my career goals."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JC</div>
+                            <div class="author-info">
+                                <h6>James Chen</h6>
+                                <small>Data Scientist at Amazon</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="display-6 fw-bold">Ready to Accelerate Your Career?</h2>
+                    <p class="lead mb-0">Join our career support program and land your dream tech job</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="register.html" class="btn btn-light btn-lg">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light me-3">Privacy</a>
+                    <a href="#" class="text-light me-3">Terms</a>
+                    <a href="#" class="text-light">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Career page animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate service cards on scroll
+            gsap.utils.toArray('.service-card').forEach((card, index) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    delay: index * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Animate process timeline
+            gsap.utils.toArray('.process-step').forEach((step, index) => {
+                gsap.from(step, {
+                    scrollTrigger: {
+                        trigger: step,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.8,
+                    x: index % 2 === 0 ? -50 : 50,
+                    opacity: 0,
+                    delay: index * 0.2,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Animate stats
+            gsap.from('.stat-item', {
+                scrollTrigger: {
+                    trigger: '.stats-highlight',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                duration: 0.8,
+                scale: 0.8,
+                opacity: 0,
+                stagger: 0.1,
+                ease: 'back.out(1.7)'
+            });
+            
+            // Animate partner logos
+            gsap.utils.toArray('.partner-logo').forEach((logo, index) => {
+                gsap.from(logo, {
+                    scrollTrigger: {
+                        trigger: logo,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.6,
+                    y: 30,
+                    opacity: 0,
+                    delay: index * 0.05,
+                    ease: 'power2.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

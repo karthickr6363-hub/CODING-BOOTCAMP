@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions - TechBootcamp</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Admissions Page Specific Styles */
+        .admissions-hero {
+            background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
+            padding: 8rem 0 4rem;
+        }
+        
+        .admission-step {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .admission-step:hover {
+            border-color: var(--neon-teal);
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--neon-teal);
+            color: var(--midnight-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+        
+        .step-title {
+            color: var(--cloud-white);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .step-description {
+            color: rgba(245, 247, 251, 0.8);
+        }
+        
+        .application-form {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+        
+        .form-control, .form-select {
+            background: rgba(245, 247, 251, 0.1);
+            border: 1px solid rgba(245, 247, 251, 0.2);
+            color: var(--cloud-white);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: rgba(245, 247, 251, 0.15);
+            border-color: var(--neon-teal);
+            color: var(--cloud-white);
+            box-shadow: 0 0 0 0.2rem rgba(0, 229, 196, 0.25);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(245, 247, 251, 0.5);
+        }
+        
+        .form-label {
+            color: var(--cloud-white);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-check-input {
+            background-color: rgba(245, 247, 251, 0.1);
+            border-color: rgba(245, 247, 251, 0.3);
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--neon-teal);
+            border-color: var(--neon-teal);
+        }
+        
+        .form-check-label {
+            color: rgba(245, 247, 251, 0.9);
+        }
+        
+        .payment-card {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .payment-card:hover {
+            border-color: var(--neon-teal);
+            transform: translateY(-3px);
+        }
+        
+        .payment-card.selected {
+            border-color: var(--neon-teal);
+            background: rgba(0, 229, 196, 0.1);
+        }
+        
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-title {
+            color: var(--cloud-white);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .payment-price {
+            color: var(--neon-teal);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .payment-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .payment-features li {
+            color: rgba(245, 247, 251, 0.8);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .payment-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--neon-teal);
+        }
+        
+        .eligibility-card {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .eligibility-title {
+            color: var(--neon-teal);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .eligibility-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .eligibility-list li {
+            color: rgba(245, 247, 251, 0.9);
+            margin-bottom: 0.75rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .eligibility-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--neon-teal);
+            font-size: 1.5rem;
+        }
+        
+        .test-mockup {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+        
+        .question-card {
+            background: rgba(245, 247, 251, 0.08);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .question-text {
+            color: var(--cloud-white);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .answer-option {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            color: rgba(245, 247, 251, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-option:hover {
+            border-color: var(--neon-teal);
+            background: rgba(0, 229, 196, 0.1);
+        }
+        
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            right: -50%;
+            height: 2px;
+            background: rgba(245, 247, 251, 0.2);
+            z-index: 1;
+        }
+        
+        .progress-step:last-child::before {
+            display: none;
+        }
+        
+        .progress-step.active::before {
+            background: var(--neon-teal);
+        }
+        
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 247, 251, 0.1);
+            border: 2px solid rgba(245, 247, 251, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            position: relative;
+            z-index: 2;
+            color: rgba(245, 247, 251, 0.7);
+            font-weight: 600;
+        }
+        
+        .progress-step.active .progress-circle {
+            background: var(--neon-teal);
+            color: var(--midnight-blue);
+            border-color: var(--neon-teal);
+        }
+        
+        .progress-step.completed .progress-circle {
+            background: var(--neon-teal);
+            color: var(--midnight-blue);
+            border-color: var(--neon-teal);
+        }
+        
+        .progress-label {
+            color: rgba(245, 247, 251, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .progress-step.active .progress-label {
+            color: var(--cloud-white);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-code-slash"></i> TechBootcamp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Home
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                            <li><a class="dropdown-item" href="index.html">Home 1 - Future Developer Mode</a></li>
+                            <li><a class="dropdown-item" href="home2.html">Home 2 - Student Portal</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="programs.html">Programs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="career.html">Career</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admissions.html">Admissions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reviews.html">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                            <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admissions Hero -->
+    <section class="admissions-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Join TechBootcamp</h1>
+                    <p class="lead mb-4">Start your journey to becoming a job-ready developer</p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <div class="stat-card">
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">Easy Steps to Enroll</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Steps -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Admission Process</h2>
+                <p class="lead">Simple and straightforward enrollment process</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="admission-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Check Eligibility</h3>
+                        <p class="step-description">Review our requirements and ensure you meet the criteria</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="admission-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Take Entrance Test</h3>
+                        <p class="step-description">Complete our online assessment to evaluate your skills</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="admission-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Submit Application</h3>
+                        <p class="step-description">Fill out the application form with your details</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="admission-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Choose Payment Plan</h3>
+                        <p class="step-description">Select a payment option that works for you</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="eligibility-card">
+                        <h3 class="eligibility-title">Eligibility Requirements</h3>
+                        <ul class="eligibility-list">
+                            <li>Minimum 18 years of age</li>
+                            <li>High school diploma or equivalent</li>
+                            <li>Basic computer literacy</li>
+                            <li>English proficiency (spoken and written)</li>
+                            <li>No prior coding experience required</li>
+                            <li>Dedication to complete the program</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="eligibility-card">
+                        <h3 class="eligibility-title">What You'll Need</h3>
+                        <ul class="eligibility-list">
+                            <li>Computer with internet connection</li>
+                            <li>Webcam and microphone for online classes</li>
+                            <li>10-15 hours per week for study</li>
+                            <li>Positive attitude and willingness to learn</li>
+                            <li>Team collaboration skills</li>
+                            <li>Problem-solving mindset</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Application Form</h2>
+                <p class="lead">Tell us about yourself and your goals</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="application-form">
+                        <!-- Progress Indicator -->
+                        <div class="progress-indicator">
+                            <div class="progress-step active">
+                                <div class="progress-circle">1</div>
+                                <div class="progress-label">Personal Info</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="progress-circle">2</div>
+                                <div class="progress-label">Education</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="progress-circle">3</div>
+                                <div class="progress-label">Goals</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="progress-circle">4</div>
+                                <div class="progress-label">Review</div>
+                            </div>
+                        </div>
+                        
+                        <form id="applicationForm">
+                            <!-- Personal Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">Program of Interest *</label>
+                                <select class="form-select" required>
+                                    <option value="">Select a program</option>
+                                    <option>Full Stack Web Development</option>
+                                    <option>Data Science & Machine Learning</option>
+                                    <option>Mobile App Development</option>
+                                    <option>Cloud Architecture</option>
+                                    <option>Python Programming</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Education Background -->
+                            <h4 class="text-teal mb-3">Education Background</h4>
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Highest Education *</label>
+                                    <select class="form-select" required>
+                                        <option value="">Select education level</option>
+                                        <option>High School</option>
+                                        <option>Associate Degree</option>
+                                        <option>Bachelor's Degree</option>
+                                        <option>Master's Degree</option>
+                                        <option>PhD</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Field of Study</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <!-- Goals and Motivation -->
+                            <h4 class="text-teal mb-3">Your Goals</h4>
+                            <div class="mb-4">
+                                <label class="form-label">Why do you want to join TechBootcamp? *</label>
+                                <textarea class="form-control" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">What are your career goals after graduation? *</label>
+                                <textarea class="form-control" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">How did you hear about us? *</label>
+                                <select class="form-select" required>
+                                    <option value="">Select an option</option>
+                                    <option>Google Search</option>
+                                    <option>Social Media</option>
+                                    <option>Friend/Referral</option>
+                                    <option>Advertisement</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                <label class="form-check-label" for="termsCheck">
+                                    I agree to the terms and conditions and privacy policy
+                                </label>
+                            </div>
+                            
+                            <div class="d-flex gap-3">
+                                <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+                                <button type="button" class="btn btn-outline-light btn-lg">Save Draft</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Entrance Test Mockup -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Entrance Test Preview</h2>
+                <p class="lead">Get a glimpse of our assessment format</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="test-mockup">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="text-teal">Sample Questions</h4>
+                            <span class="badge bg-primary">5 minutes</span>
+                        </div>
+                        
+                        <div class="question-card">
+                            <div class="question-text">1. What is the output of the following code?</div>
+                            <pre class="bg-dark p-3 rounded mb-3"><code>console.log(2 + "2");</code></pre>
+                            <div class="answer-option">A) 4</div>
+                            <div class="answer-option">B) "22"</div>
+                            <div class="answer-option">C) Error</div>
+                            <div class="answer-option">D) "2 + 2"</div>
+                        </div>
+                        
+                        <div class="question-card">
+                            <div class="question-text">2. Which of the following is NOT a programming paradigm?</div>
+                            <div class="answer-option">A) Object-Oriented Programming</div>
+                            <div class="answer-option">B) Functional Programming</div>
+                            <div class="answer-option">C) Procedural Programming</div>
+                            <div class="answer-option">D) Mathematical Programming</div>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <button class="btn btn-outline-light">View More Sample Questions</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Plans -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Payment Plans</h2>
+                <p class="lead">Flexible payment options to fit your budget</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="payment-card">
+                        <div class="payment-header">
+                            <h4 class="payment-title">Pay Upfront</h4>
+                            <div class="payment-price">$7,999</div>
+                        </div>
+                        <ul class="payment-features">
+                            <li>Save $1,000</li>
+                            <li>One-time payment</li>
+                            <li>Immediate access</li>
+                            <li>Certificate included</li>
+                        </ul>
+                        <button class="btn btn-outline-light w-100">Choose Plan</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="payment-card selected">
+                        <div class="payment-header">
+                            <h4 class="payment-title">Monthly Installments</h4>
+                            <div class="payment-price">$667/mo</div>
+                        </div>
+                        <ul class="payment-features">
+                            <li>12 monthly payments</li>
+                            <li>0% interest</li>
+                            <li>Flexible scheduling</li>
+                            <li>Certificate included</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Choose Plan</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="payment-card">
+                        <div class="payment-header">
+                            <h4 class="payment-title">Income Share</h4>
+                            <div class="payment-price">$0 upfront</div>
+                        </div>
+                        <ul class="payment-features">
+                            <li>Pay after you get hired</li>
+                            <li>17% of salary for 24 months</li>
+                            <li>No payments until $50K salary</li>
+                            <li>Certificate included</li>
+                        </ul>
+                        <button class="btn btn-outline-light w-100">Choose Plan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p class="text-muted">
+                    <i class="bi bi-shield-check"></i> All plans include job placement guarantee, career services, and lifetime access to course materials
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="display-6 fw-bold">Ready to Start Your Journey?</h2>
+                    <p class="lead mb-0">Apply now and take the first step towards your tech career</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="#applicationForm" class="btn btn-light btn-lg">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light me-3">Privacy</a>
+                    <a href="#" class="text-light me-3">Terms</a>
+                    <a href="#" class="text-light">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Admissions page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Payment card selection
+            const paymentCards = document.querySelectorAll('.payment-card');
+            paymentCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    paymentCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Form validation
+            const applicationForm = document.getElementById('applicationForm');
+            applicationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                showNotification('Application submitted successfully! We\'ll contact you within 24 hours.', 'success');
+            });
+            
+            // Animate admission steps
+            gsap.utils.toArray('.admission-step').forEach((step, index) => {
+                gsap.from(step, {
+                    scrollTrigger: {
+                        trigger: step,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    delay: index * 0.2,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Animate form sections
+            gsap.from('.application-form', {
+                scrollTrigger: {
+                    trigger: '.application-form',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                duration: 1,
+                scale: 0.9,
+                opacity: 0,
+                ease: 'power2.out'
+            });
+            
+            // Animate payment cards
+            gsap.utils.toArray('.payment-card').forEach((card, index) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    delay: index * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

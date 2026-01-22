@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TechBootcamp</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        /* Register Page Specific Styles */
+        .auth-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .auth-card {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-teal), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+        
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-logo i {
+            font-size: 3rem;
+            color: var(--neon-teal);
+            margin-bottom: 1rem;
+        }
+        
+        .auth-logo h2 {
+            color: var(--cloud-white);
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control {
+            background: rgba(245, 247, 251, 0.1);
+            border: 1px solid rgba(245, 247, 251, 0.2);
+            color: var(--cloud-white);
+            border-radius: 10px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: rgba(245, 247, 251, 0.15);
+            border-color: var(--neon-teal);
+            color: var(--cloud-white);
+            box-shadow: 0 0 0 0.2rem rgba(0, 229, 196, 0.25);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(245, 247, 251, 0.5);
+        }
+        
+        .form-floating label {
+            color: rgba(245, 247, 251, 0.7);
+        }
+        
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: var(--neon-teal);
+        }
+        
+        .password-toggle {
+            position: relative;
+        }
+        
+        .password-toggle-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(245, 247, 251, 0.7);
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .password-toggle-btn:hover {
+            color: var(--neon-teal);
+        }
+        
+        .form-check {
+            margin-bottom: 1rem;
+        }
+        
+        .form-check-input {
+            background-color: rgba(245, 247, 251, 0.1);
+            border-color: rgba(245, 247, 251, 0.3);
+            margin-right: 0.5rem;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--neon-teal);
+            border-color: var(--neon-teal);
+        }
+        
+        .form-check-label {
+            color: rgba(245, 247, 251, 0.9);
+            font-size: 0.9rem;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(245, 247, 251, 0.2);
+        }
+        
+        .divider span {
+            background: var(--midnight-blue);
+            padding: 0 1rem;
+            color: rgba(245, 247, 251, 0.7);
+            position: relative;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid rgba(245, 247, 251, 0.2);
+            background: rgba(245, 247, 251, 0.05);
+            color: var(--cloud-white);
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            border-color: var(--neon-teal);
+            background: rgba(0, 229, 196, 0.1);
+            color: var(--neon-teal);
+            transform: translateY(-2px);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            color: rgba(245, 247, 251, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .auth-footer a {
+            color: var(--neon-teal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .tech-interests {
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tech-badge {
+            background: rgba(245, 247, 251, 0.1);
+            border: 1px solid rgba(245, 247, 251, 0.2);
+            color: var(--cloud-white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-badge:hover,
+        .tech-badge.selected {
+            background: var(--neon-teal);
+            color: var(--midnight-blue);
+            border-color: var(--neon-teal);
+        }
+        
+        .strength-meter {
+            height: 5px;
+            background: rgba(245, 247, 251, 0.1);
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .strength-meter-fill {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .strength-weak { background: #dc3545; width: 33%; }
+        .strength-medium { background: #ffc107; width: 66%; }
+        .strength-strong { background: #28a745; width: 100%; }
+        
+        .password-requirements {
+            font-size: 0.8rem;
+            color: rgba(245, 247, 251, 0.7);
+            margin-top: 0.5rem;
+        }
+        
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+        
+        .requirement i {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .requirement.met {
+            color: var(--neon-teal);
+        }
+        
+        .requirement.unmet {
+            color: rgba(245, 247, 251, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo Section -->
+            <div class="auth-logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <i class="bi bi-code-slash"></i>
+                    <h2>TechBootcamp</h2>
+                </a>
+            </div>
+            
+            <!-- Registration Form -->
+            <div id="registerForm">
+                <h3 class="text-center mb-4" style="color: var(--cloud-white);">Create Account</h3>
+                <p class="text-center mb-4" style="color: rgba(245, 247, 251, 0.7);">Join our community and start your tech journey</p>
+                
+                <form id="registerFormElement">
+                    <!-- Personal Information -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                                <label for="firstName">First Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                                <label for="lastName">Last Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <label for="email">Email Address</label>
+                    </div>
+                    
+                    <!-- Phone -->
+                    <div class="form-floating">
+                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+                        <label for="phone">Phone Number</label>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="form-floating password-toggle">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required onkeyup="checkPasswordStrength()">
+                        <label for="password">Password</label>
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('password')">
+                            <i class="bi bi-eye" id="passwordToggle"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Password Strength Meter -->
+                    <div class="strength-meter">
+                        <div class="strength-meter-fill" id="strengthMeter"></div>
+                    </div>
+                    
+                    <div class="password-requirements">
+                        <div class="requirement unmet" id="req-length">
+                            <i class="bi bi-circle"></i> At least 8 characters
+                        </div>
+                        <div class="requirement unmet" id="req-uppercase">
+                            <i class="bi bi-circle"></i> One uppercase letter
+                        </div>
+                        <div class="requirement unmet" id="req-lowercase">
+                            <i class="bi bi-circle"></i> One lowercase letter
+                        </div>
+                        <div class="requirement unmet" id="req-number">
+                            <i class="bi bi-circle"></i> One number
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Interests -->
+                    <div class="tech-interests">
+                        <label class="form-label" style="color: var(--cloud-white);">What are you interested in learning?</label>
+                        <div class="tech-badges">
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">Web Development</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">Data Science</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">Mobile Apps</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">AI/ML</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">Cloud Computing</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">DevOps</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">UI/UX Design</div>
+                            <div class="tech-badge" onclick="toggleTechBadge(this)">Blockchain</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Goals -->
+                    <div class="form-floating">
+                        <textarea class="form-control" id="goals" placeholder="Your Goals" style="height: 100px;"></textarea>
+                        <label for="goals">What are your career goals?</label>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the Terms of Service and Privacy Policy
+                        </label>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="newsletter">
+                        <label class="form-check-label" for="newsletter">
+                            Send me updates about courses and events
+                        </label>
+                    </div>
+                    
+                    <!-- Register Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                        Create Account
+                    </button>
+                </form>
+                
+                <!-- Divider -->
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                
+                <!-- Social Registration -->
+                <div class="social-login">
+                    <a href="#" class="social-btn">
+                        <i class="bi bi-google"></i>
+                        Google
+                    </a>
+                    <a href="#" class="social-btn">
+                        <i class="bi bi-github"></i>
+                        GitHub
+                    </a>
+                </div>
+                
+                <!-- Login Link -->
+                <div class="auth-footer">
+                    Already have an account? <a href="login.html">Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Register page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate auth card
+            gsap.from('.auth-card', {
+                duration: 1,
+                scale: 0.9,
+                opacity: 0,
+                ease: 'power2.out'
+            });
+            
+            // Form submission
+            document.getElementById('registerFormElement').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('password').value,
+                    goals: document.getElementById('goals').value,
+                    interests: Array.from(document.querySelectorAll('.tech-badge.selected')).map(badge => badge.textContent),
+                    terms: document.getElementById('terms').checked,
+                    newsletter: document.getElementById('newsletter').checked
+                };
+                
+                // Simulate registration process
+                showLoading(e.target.querySelector('button[type="submit"]'));
+                
+                setTimeout(() => {
+                    hideLoading(e.target.querySelector('button[type="submit"]'));
+                    showNotification('Account created successfully! Redirecting to login...', 'success');
+                    
+                    // Redirect to login after successful registration
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                }, 2000);
+            });
+        });
+        
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = document.getElementById('passwordToggle');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.classList.remove('bi-eye');
+                toggle.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                toggle.classList.remove('bi-eye-slash');
+                toggle.classList.add('bi-eye');
+            }
+        }
+        
+        // Toggle tech badge selection
+        function toggleTechBadge(badge) {
+            badge.classList.toggle('selected');
+        }
+        
+        // Check password strength
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthMeter = document.getElementById('strengthMeter');
+            
+            // Check requirements
+            const requirements = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                lowercase: /[a-z]/.test(password),
+                number: /[0-9]/.test(password)
+            };
+            
+            // Update requirement indicators
+            updateRequirement('req-length', requirements.length);
+            updateRequirement('req-uppercase', requirements.uppercase);
+            updateRequirement('req-lowercase', requirements.lowercase);
+            updateRequirement('req-number', requirements.number);
+            
+            // Calculate strength
+            const metRequirements = Object.values(requirements).filter(Boolean).length;
+            
+            // Update strength meter
+            strengthMeter.className = 'strength-meter-fill';
+            if (metRequirements <= 1) {
+                strengthMeter.classList.add('strength-weak');
+            } else if (metRequirements <= 2) {
+                strengthMeter.classList.add('strength-medium');
+            } else {
+                strengthMeter.classList.add('strength-strong');
+            }
+        }
+        
+        // Update requirement indicator
+        function updateRequirement(id, met) {
+            const element = document.getElementById(id);
+            const icon = element.querySelector('i');
+            
+            if (met) {
+                element.classList.remove('unmet');
+                element.classList.add('met');
+                icon.classList.remove('bi-circle');
+                icon.classList.add('bi-check-circle-fill');
+            } else {
+                element.classList.remove('met');
+                element.classList.add('unmet');
+                icon.classList.remove('bi-check-circle-fill');
+                icon.classList.add('bi-circle');
+            }
+        }
+    </script>
+</body>
+</html>
