@@ -372,15 +372,7 @@ function hideLoading(element) {
     element.disabled = false;
 }
 
-// Parallax Effect for Hero Section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallax = document.querySelector('.hero-section');
-    if (parallax) {
-        const speed = 0.5;
-        parallax.style.transform = `translateY(${scrolled * speed}px)`;
-    }
-});
+
 
 // Mobile Menu Enhancement
 document.addEventListener('DOMContentLoaded', function() {

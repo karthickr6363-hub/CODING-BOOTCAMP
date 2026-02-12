@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses - TechBootcamp</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -17,14 +18,14 @@
     <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <style>
         /* Courses Page Specific Styles */
         .courses-hero {
             background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
             padding: 8rem 0 4rem;
         }
-        
+
         .filter-section {
             background: rgba(245, 247, 251, 0.05);
             border-radius: 15px;
@@ -32,7 +33,7 @@
             margin-bottom: 3rem;
             border: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .filter-btn {
             background: rgba(245, 247, 251, 0.1);
             border: 1px solid rgba(245, 247, 251, 0.2);
@@ -42,7 +43,7 @@
             margin: 0.25rem;
             transition: all 0.3s ease;
         }
-        
+
         .filter-btn:hover,
         .filter-btn.active {
             background: var(--neon-teal);
@@ -50,7 +51,7 @@
             border-color: var(--neon-teal);
             transform: translateY(-2px);
         }
-        
+
         .course-card {
             background: rgba(245, 247, 251, 0.05);
             border: 1px solid rgba(245, 247, 251, 0.1);
@@ -60,19 +61,19 @@
             height: 100%;
             position: relative;
         }
-        
+
         .course-card:hover {
             transform: translateY(-10px);
             border-color: var(--neon-teal);
             box-shadow: 0 20px 40px rgba(0, 229, 196, 0.2);
         }
-        
+
         .course-card-header {
             background: linear-gradient(135deg, rgba(0, 229, 196, 0.1) 0%, rgba(0, 229, 196, 0.05) 100%);
             padding: 1.5rem;
             border-bottom: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .course-level {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -81,50 +82,50 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-        
+
         .level-beginner {
             background: rgba(0, 229, 196, 0.2);
             color: var(--neon-teal);
         }
-        
+
         .level-intermediate {
             background: rgba(255, 193, 7, 0.2);
             color: #FFC107;
         }
-        
+
         .level-advanced {
             background: rgba(220, 53, 69, 0.2);
             color: #DC3545;
         }
-        
+
         .course-duration {
             color: rgba(245, 247, 251, 0.7);
             font-size: 0.9rem;
         }
-        
+
         .course-body {
             padding: 1.5rem;
         }
-        
+
         .course-title {
             color: var(--cloud-white);
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
-        
+
         .course-description {
             color: rgba(245, 247, 251, 0.8);
             margin-bottom: 1.5rem;
         }
-        
+
         .course-tech-stack {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        
+
         .tech-badge {
             background: rgba(245, 247, 251, 0.1);
             color: var(--cloud-white);
@@ -132,7 +133,7 @@
             border-radius: 5px;
             font-size: 0.8rem;
         }
-        
+
         .course-footer {
             padding: 1.5rem;
             border-top: 1px solid rgba(245, 247, 251, 0.1);
@@ -140,13 +141,13 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .course-price {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--neon-teal);
         }
-        
+
         .course-meta {
             display: flex;
             align-items: center;
@@ -154,20 +155,20 @@
             color: rgba(245, 247, 251, 0.7);
             font-size: 0.9rem;
         }
-        
+
         .modal-content {
             background: var(--midnight-blue);
             border: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .modal-header {
             border-bottom: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .modal-footer {
             border-top: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .syllabus-item {
             background: rgba(245, 247, 251, 0.05);
             border-radius: 10px;
@@ -175,11 +176,11 @@
             margin-bottom: 1rem;
             border-left: 3px solid var(--neon-teal);
         }
-        
+
         .search-box {
             position: relative;
         }
-        
+
         .search-box input {
             background: rgba(245, 247, 251, 0.1);
             border: 1px solid rgba(245, 247, 251, 0.2);
@@ -189,17 +190,17 @@
             width: 100%;
             transition: all 0.3s ease;
         }
-        
+
         .search-box input:focus {
             outline: none;
             border-color: var(--neon-teal);
             background: rgba(245, 247, 251, 0.15);
         }
-        
+
         .search-box input::placeholder {
             color: rgba(245, 247, 251, 0.5);
         }
-        
+
         .search-box i {
             position: absolute;
             left: 1rem;
@@ -209,6 +210,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -222,7 +224,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Home
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="homeDropdown">
@@ -249,18 +252,18 @@
                         <a class="nav-link" href="blog.html">Blog</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Admin
+                        <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dashboards
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
                             <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                            <li><a class="dropdown-item" href="dashboard.html">Student Dashboard</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
-                    <a href="register.html" class="btn btn-primary">Register</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -273,7 +276,7 @@
                 <div class="col-lg-8">
                     <h1 class="display-4 fw-bold mb-4">Explore Our Courses</h1>
                     <p class="lead mb-4">Choose from our comprehensive curriculum designed to make you job-ready</p>
-                    
+
                     <!-- Search Box -->
                     <div class="search-box mb-4">
                         <i class="bi bi-search"></i>
@@ -297,7 +300,7 @@
         <div class="container">
             <div class="filter-section">
                 <h4 class="mb-4">Filter Courses</h4>
-                
+
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <h6 class="text-teal mb-3">Level</h6>
@@ -308,7 +311,7 @@
                             <button class="filter-btn" data-filter="advanced">Advanced</button>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4 mb-3">
                         <h6 class="text-teal mb-3">Duration</h6>
                         <div class="filter-group">
@@ -318,7 +321,7 @@
                             <button class="filter-btn" data-duration="16">16 Weeks</button>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4 mb-3">
                         <h6 class="text-teal mb-3">Tech Stack</h6>
                         <div class="filter-group">
@@ -339,17 +342,19 @@
         <div class="container">
             <div class="row g-4" id="coursesGrid">
                 <!-- Course 1 -->
-                <div class="col-lg-4 col-md-6 course-item" data-level="beginner" data-duration="12" data-tech="javascript react">
-                    <div class="course-card">
+                <div class="col-lg-4 col-md-6 course-item" data-level="beginner" data-duration="12"
+                    data-tech="javascript react">
+                    <div class="course-card d-flex flex-column h-100">
                         <div class="course-card-header">
                             <span class="course-level level-beginner">Beginner</span>
                             <div class="course-duration">
                                 <i class="bi bi-clock"></i> 12 Weeks
                             </div>
                         </div>
-                        <div class="course-body">
+                        <div class="course-body flex-grow-1">
                             <h3 class="course-title">Full Stack Web Development</h3>
-                            <p class="course-description">Master modern web development with HTML, CSS, JavaScript, React, and Node.js</p>
+                            <p class="course-description">Master modern web development with HTML, CSS, JavaScript,
+                                React, and Node.js</p>
                             <div class="course-tech-stack">
                                 <span class="tech-badge">HTML</span>
                                 <span class="tech-badge">CSS</span>
@@ -368,17 +373,19 @@
                 </div>
 
                 <!-- Course 2 -->
-                <div class="col-lg-4 col-md-6 course-item" data-level="intermediate" data-duration="16" data-tech="python">
-                    <div class="course-card">
+                <div class="col-lg-4 col-md-6 course-item" data-level="intermediate" data-duration="16"
+                    data-tech="python">
+                    <div class="course-card d-flex flex-column h-100">
                         <div class="course-card-header">
                             <span class="course-level level-intermediate">Intermediate</span>
                             <div class="course-duration">
                                 <i class="bi bi-clock"></i> 16 Weeks
                             </div>
                         </div>
-                        <div class="course-body">
+                        <div class="course-body flex-grow-1">
                             <h3 class="course-title">Data Science & Machine Learning</h3>
-                            <p class="course-description">Learn Python, data analysis, ML algorithms, and build predictive models</p>
+                            <p class="course-description">Learn Python, data analysis, ML algorithms, and build
+                                predictive models</p>
                             <div class="course-tech-stack">
                                 <span class="tech-badge">Python</span>
                                 <span class="tech-badge">Pandas</span>
@@ -396,17 +403,19 @@
                 </div>
 
                 <!-- Course 3 -->
-                <div class="col-lg-4 col-md-6 course-item" data-level="beginner" data-duration="8" data-tech="javascript">
-                    <div class="course-card">
+                <div class="col-lg-4 col-md-6 course-item" data-level="beginner" data-duration="8"
+                    data-tech="javascript">
+                    <div class="course-card d-flex flex-column h-100">
                         <div class="course-card-header">
                             <span class="course-level level-beginner">Beginner</span>
                             <div class="course-duration">
                                 <i class="bi bi-clock"></i> 8 Weeks
                             </div>
                         </div>
-                        <div class="course-body">
+                        <div class="course-body flex-grow-1">
                             <h3 class="course-title">JavaScript Fundamentals</h3>
-                            <p class="course-description">Master JavaScript from basics to advanced concepts and modern ES6+</p>
+                            <p class="course-description">Master JavaScript from basics to advanced concepts and modern
+                                ES6+</p>
                             <div class="course-tech-stack">
                                 <span class="tech-badge">JavaScript</span>
                                 <span class="tech-badge">ES6+</span>
@@ -424,17 +433,19 @@
                 </div>
 
                 <!-- Course 4 -->
-                <div class="col-lg-4 col-md-6 course-item" data-level="advanced" data-duration="12" data-tech="aws node">
-                    <div class="course-card">
+                <div class="col-lg-4 col-md-6 course-item" data-level="advanced" data-duration="12"
+                    data-tech="aws node">
+                    <div class="course-card d-flex flex-column h-100">
                         <div class="course-card-header">
                             <span class="course-level level-advanced">Advanced</span>
                             <div class="course-duration">
                                 <i class="bi bi-clock"></i> 12 Weeks
                             </div>
                         </div>
-                        <div class="course-body">
+                        <div class="course-body flex-grow-1">
                             <h3 class="course-title">Cloud Architecture with AWS</h3>
-                            <p class="course-description">Design and deploy scalable cloud solutions using AWS services</p>
+                            <p class="course-description">Design and deploy scalable cloud solutions using AWS services
+                            </p>
                             <div class="course-tech-stack">
                                 <span class="tech-badge">AWS</span>
                                 <span class="tech-badge">EC2</span>
@@ -452,15 +463,16 @@
                 </div>
 
                 <!-- Course 5 -->
-                <div class="col-lg-4 col-md-6 course-item" data-level="intermediate" data-duration="8" data-tech="react">
-                    <div class="course-card">
+                <div class="col-lg-4 col-md-6 course-item" data-level="intermediate" data-duration="8"
+                    data-tech="react">
+                    <div class="course-card d-flex flex-column h-100">
                         <div class="course-card-header">
                             <span class="course-level level-intermediate">Intermediate</span>
                             <div class="course-duration">
                                 <i class="bi bi-clock"></i> 8 Weeks
                             </div>
                         </div>
-                        <div class="course-body">
+                        <div class="course-body flex-grow-1">
                             <h3 class="course-title">React Advanced Patterns</h3>
                             <p class="course-description">Master React hooks, context API, performance optimization</p>
                             <div class="course-tech-stack">
@@ -481,16 +493,17 @@
 
                 <!-- Course 6 -->
                 <div class="col-lg-4 col-md-6 course-item" data-level="beginner" data-duration="4" data-tech="python">
-                    <div class="course-card">
+                    <div class="course-card d-flex flex-column h-100">
                         <div class="course-card-header">
                             <span class="course-level level-beginner">Beginner</span>
                             <div class="course-duration">
                                 <i class="bi bi-clock"></i> 4 Weeks
                             </div>
                         </div>
-                        <div class="course-body">
+                        <div class="course-body flex-grow-1">
                             <h3 class="course-title">Python for Beginners</h3>
-                            <p class="course-description">Start your programming journey with Python basics and fundamentals</p>
+                            <p class="course-description">Start your programming journey with Python basics and
+                                fundamentals</p>
                             <div class="course-tech-stack">
                                 <span class="tech-badge">Python</span>
                                 <span class="tech-badge">Basics</span>
@@ -501,6 +514,180 @@
                         <div class="course-footer">
                             <div class="course-price">$999</div>
                             <button class="btn btn-primary" onclick="showSyllabus('Python for Beginners')">
+                                View Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 7 -->
+                <div class="col-lg-4 col-md-6 course-item" data-level="advanced" data-duration="12"
+                    data-tech="javascript">
+                    <div class="course-card d-flex flex-column h-100">
+                        <div class="course-card-header">
+                            <span class="course-level level-advanced">Advanced</span>
+                            <div class="course-duration">
+                                <i class="bi bi-clock"></i> 12 Weeks
+                            </div>
+                        </div>
+                        <div class="course-body flex-grow-1">
+                            <h3 class="course-title">Cyber Security Essentials</h3>
+                            <p class="course-description">Learn network security, ethical hacking, and threat protection
+                                strategies</p>
+                            <div class="course-tech-stack">
+                                <span class="tech-badge">Network Security</span>
+                                <span class="tech-badge">Ethical Hacking</span>
+                                <span class="tech-badge">Linux</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">$3,999</div>
+                            <button class="btn btn-primary" onclick="showSyllabus('Cyber Security Essentials')">
+                                View Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 8 -->
+                <div class="col-lg-4 col-md-6 course-item" data-level="intermediate" data-duration="16"
+                    data-tech="react">
+                    <div class="course-card d-flex flex-column h-100">
+                        <div class="course-card-header">
+                            <span class="course-level level-intermediate">Intermediate</span>
+                            <div class="course-duration">
+                                <i class="bi bi-clock"></i> 16 Weeks
+                            </div>
+                        </div>
+                        <div class="course-body flex-grow-1">
+                            <h3 class="course-title">Mobile App Development</h3>
+                            <p class="course-description">Build cross-platform mobile apps using Flutter and React
+                                Native</p>
+                            <div class="course-tech-stack">
+                                <span class="tech-badge">Flutter</span>
+                                <span class="tech-badge">React Native</span>
+                                <span class="tech-badge">Firebase</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">$3,299</div>
+                            <button class="btn btn-primary" onclick="showSyllabus('Mobile App Development')">
+                                View Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 9 -->
+                <div class="col-lg-4 col-md-6 course-item" data-level="beginner" data-duration="8"
+                    data-tech="javascript">
+                    <div class="course-card d-flex flex-column h-100">
+                        <div class="course-card-header">
+                            <span class="course-level level-beginner">Beginner</span>
+                            <div class="course-duration">
+                                <i class="bi bi-clock"></i> 8 Weeks
+                            </div>
+                        </div>
+                        <div class="course-body flex-grow-1">
+                            <h3 class="course-title">UI/UX Design Masterclass</h3>
+                            <p class="course-description">Master design principles, user research, and prototyping with
+                                Figma</p>
+                            <div class="course-tech-stack">
+                                <span class="tech-badge">Figma</span>
+                                <span class="tech-badge">User Research</span>
+                                <span class="tech-badge">Prototyping</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">$1,799</div>
+                            <button class="btn btn-primary" onclick="showSyllabus('UI/UX Design Masterclass')">
+                                View Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 10 -->
+                <div class="col-lg-4 col-md-6 course-item" data-level="advanced" data-duration="12"
+                    data-tech="javascript">
+                    <div class="course-card d-flex flex-column h-100">
+                        <div class="course-card-header">
+                            <span class="course-level level-advanced">Advanced</span>
+                            <div class="course-duration">
+                                <i class="bi bi-clock"></i> 12 Weeks
+                            </div>
+                        </div>
+                        <div class="course-body flex-grow-1">
+                            <h3 class="course-title">Blockchain & Web3</h3>
+                            <p class="course-description">Develop decentralized applications and smart contracts with
+                                Solidity</p>
+                            <div class="course-tech-stack">
+                                <span class="tech-badge">Solidity</span>
+                                <span class="tech-badge">Ethereum</span>
+                                <span class="tech-badge">Web3.js</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">$4,499</div>
+                            <button class="btn btn-primary" onclick="showSyllabus('Blockchain & Web3')">
+                                View Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 11 -->
+                <div class="col-lg-4 col-md-6 course-item" data-level="advanced" data-duration="16"
+                    data-tech="aws node">
+                    <div class="course-card d-flex flex-column h-100">
+                        <div class="course-card-header">
+                            <span class="course-level level-advanced">Advanced</span>
+                            <div class="course-duration">
+                                <i class="bi bi-clock"></i> 16 Weeks
+                            </div>
+                        </div>
+                        <div class="course-body flex-grow-1">
+                            <h3 class="course-title">DevOps Engineering</h3>
+                            <p class="course-description">Automate deployment pipelines with Docker, Kubernetes, and
+                                CI/CD</p>
+                            <div class="course-tech-stack">
+                                <span class="tech-badge">Docker</span>
+                                <span class="tech-badge">Kubernetes</span>
+                                <span class="tech-badge">Jenkins</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">$3,799</div>
+                            <button class="btn btn-primary" onclick="showSyllabus('DevOps Engineering')">
+                                View Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 12 -->
+                <div class="col-lg-4 col-md-6 course-item" data-level="intermediate" data-duration="12"
+                    data-tech="python">
+                    <div class="course-card d-flex flex-column h-100">
+                        <div class="course-card-header">
+                            <span class="course-level level-intermediate">Intermediate</span>
+                            <div class="course-duration">
+                                <i class="bi bi-clock"></i> 12 Weeks
+                            </div>
+                        </div>
+                        <div class="course-body flex-grow-1">
+                            <h3 class="course-title">Artificial Intelligence</h3>
+                            <p class="course-description">Explore neural networks, computer vision, and natural language
+                                processing</p>
+                            <div class="course-tech-stack">
+                                <span class="tech-badge">PyTorch</span>
+                                <span class="tech-badge">NLP</span>
+                                <span class="tech-badge">Computer Vision</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">$3,999</div>
+                            <button class="btn btn-primary" onclick="showSyllabus('Artificial Intelligence')">
                                 View Syllabus
                             </button>
                         </div>
@@ -530,17 +717,65 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
+    <footer class="footer py-5 mt-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-4">
+                        <a class="navbar-brand fw-bold" href="index.html">
+                            <i class="bi bi-code-slash"></i> TechBootcamp
+                        </a>
+                    </div>
+                    <p class="footer-description text-muted mb-4">
+                        Transform your future with industry-leading code education. Join thousands of successful
+                        graduates working at top tech companies worldwide.
+                    </p>
+                    <div class="social-links d-flex gap-3">
+                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-light me-3">Privacy</a>
-                    <a href="#" class="text-light me-3">Terms</a>
-                    <a href="#" class="text-light">Contact</a>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Programs</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="courses.html">Web Development</a></li>
+                        <li><a href="courses.html">Data Science</a></li>
+                        <li><a href="courses.html">Mobile App Dev</a></li>
+                        <li><a href="programs.html">Part-time Coding</a></li>
+                    </ul>
                 </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Resources</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="blog.html">Tech Blog</a></li>
+                        <li><a href="reviews.html">Success Stories</a></li>
+                        <li><a href="career.html">Career Support</a></li>
+                        <li><a href="admissions.html">How to Apply</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-title mb-4">Newsletter</h5>
+                    <p class="text-muted mb-4">Stay updated with the latest tech trends and cohort openings.</p>
+                    <form class="newsletter-form mb-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email Address" required>
+                            <button class="btn btn-primary" type="submit">Join</button>
+                        </div>
+                    </form>
+                    <div class="footer-legal d-flex gap-3">
+                        <a href="#" class="text-muted small">Privacy Policy</a>
+                        <a href="#" class="text-muted small">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 border-secondary opacity-25">
+            <div class="footer-bottom text-center">
+                <p class="mb-0 text-muted">&copy; 2026 TechBootcamp. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -549,29 +784,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/main.js"></script>
-    
+
     <script>
         // Course filtering functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const courseItems = document.querySelectorAll('.course-item');
             const searchInput = document.getElementById('courseSearch');
-            
+
             // Filter button click handler
             filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     // Remove active class from siblings
                     const siblings = this.parentElement.querySelectorAll('.filter-btn');
                     siblings.forEach(sibling => sibling.classList.remove('active'));
                     this.classList.add('active');
-                    
+
                     filterCourses();
                 });
             });
-            
+
             // Search functionality
             searchInput.addEventListener('input', filterCourses);
-            
+
             function filterCourses() {
                 const activeLevelBtn = document.querySelector('[data-filter].active');
                 const activeLevel = activeLevelBtn ? activeLevelBtn.dataset.filter : 'all';
@@ -580,40 +815,40 @@
                 const activeTechBtn = document.querySelector('[data-tech].active');
                 const activeTech = activeTechBtn ? activeTechBtn.dataset.tech : null;
                 const searchTerm = searchInput.value.toLowerCase();
-                
+
                 courseItems.forEach(course => {
                     const level = course.dataset.level;
                     const duration = course.dataset.duration;
                     const tech = course.dataset.tech;
                     const title = course.querySelector('.course-title').textContent.toLowerCase();
                     const description = course.querySelector('.course-description').textContent.toLowerCase();
-                    
+
                     let showCourse = true;
-                    
+
                     // Level filter
                     if (activeLevel !== 'all' && level !== activeLevel) {
                         showCourse = false;
                     }
-                    
+
                     // Duration filter
                     if (activeDuration && duration !== activeDuration) {
                         showCourse = false;
                     }
-                    
+
                     // Tech filter
                     if (activeTech && !tech.includes(activeTech)) {
                         showCourse = false;
                     }
-                    
+
                     // Search filter
                     if (searchTerm && !title.includes(searchTerm) && !description.includes(searchTerm)) {
                         showCourse = false;
                     }
-                    
+
                     course.style.display = showCourse ? 'block' : 'none';
                 });
             }
-            
+
             // Animate course cards on scroll
             gsap.utils.toArray('.course-card').forEach((card, index) => {
                 gsap.from(card, {
@@ -630,15 +865,15 @@
                 });
             });
         });
-        
+
         // Syllabus modal functionality
         function showSyllabus(courseName) {
             const modal = new bootstrap.Modal(document.getElementById('syllabusModal'));
             const title = document.getElementById('syllabusTitle');
             const content = document.getElementById('syllabusContent');
-            
+
             title.textContent = courseName + ' - Syllabus';
-            
+
             // Sample syllabus content (you can customize this for each course)
             const syllabusData = {
                 'Full Stack Web Development': [
@@ -656,25 +891,35 @@
                     { week: 'Week 7-8', topic: 'Machine Learning Basics', description: 'Supervised learning, classification' },
                     { week: 'Week 9-10', topic: 'Deep Learning', description: 'Neural networks, TensorFlow' },
                     { week: 'Week 11-12', topic: 'Capstone Project', description: 'Build ML models for real data' }
+                ],
+                'Cyber Security Essentials': [
+                    { week: 'Week 1-4', topic: 'Network Fundamentals', description: 'TCP/IP, firewalls, and protocols' },
+                    { week: 'Week 5-8', topic: 'Threat Landscape', description: 'Malware analysis and common attacks' },
+                    { week: 'Week 9-12', topic: 'Defensive Strategies', description: 'Encryption, IAM, and SOC operations' }
+                ],
+                'Mobile App Development': [
+                    { week: 'Week 1-8', topic: 'React Native Core', description: 'Components, navigation, and state' },
+                    { week: 'Week 9-16', topic: 'Flutter Mastery', description: 'Dart language, widgets, and animation' }
                 ]
             };
-            
+
             const syllabus = syllabusData[courseName] || [
                 { week: 'Week 1-2', topic: 'Introduction', description: 'Course overview and setup' },
                 { week: 'Week 3-4', topic: 'Fundamentals', description: 'Core concepts and basics' },
                 { week: 'Week 5-6', topic: 'Advanced Topics', description: 'Deep dive into subject matter' },
                 { week: 'Week 7-8', topic: 'Practical Applications', description: 'Hands-on projects' }
             ];
-            
+
             content.innerHTML = syllabus.map(item => `
                 <div class="syllabus-item">
                     <h6>${item.week} - ${item.topic}</h6>
                     <p class="mb-0">${item.description}</p>
                 </div>
             `).join('');
-            
+
             modal.show();
         }
     </script>
 </body>
+
 </html>

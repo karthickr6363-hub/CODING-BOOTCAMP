@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reviews - TechBootcamp</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -17,14 +18,14 @@
     <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <style>
         /* Reviews Page Specific Styles */
         .reviews-hero {
             background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
             padding: 8rem 0 4rem;
         }
-        
+
         .review-card {
             background: rgba(245, 247, 251, 0.05);
             border: 1px solid rgba(245, 247, 251, 0.1);
@@ -34,19 +35,19 @@
             transition: all 0.3s ease;
             position: relative;
         }
-        
+
         .review-card:hover {
             transform: translateY(-5px);
             border-color: var(--neon-teal);
             box-shadow: 0 15px 35px rgba(0, 229, 196, 0.15);
         }
-        
+
         .review-header {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .reviewer-avatar {
             width: 60px;
             height: 60px;
@@ -60,39 +61,39 @@
             font-size: 1.2rem;
             margin-right: 1rem;
         }
-        
+
         .reviewer-info h5 {
             color: var(--cloud-white);
             margin-bottom: 0.25rem;
         }
-        
+
         .reviewer-info p {
             color: rgba(245, 247, 251, 0.7);
             margin: 0;
             font-size: 0.9rem;
         }
-        
+
         .rating {
             display: flex;
             gap: 0.25rem;
             margin-bottom: 1rem;
         }
-        
+
         .star {
             color: var(--neon-teal);
             font-size: 1.2rem;
         }
-        
+
         .star.empty {
             color: rgba(245, 247, 251, 0.3);
         }
-        
+
         .review-content {
             color: rgba(245, 247, 251, 0.9);
             line-height: 1.6;
             margin-bottom: 1rem;
         }
-        
+
         .review-meta {
             display: flex;
             justify-content: space-between;
@@ -100,12 +101,12 @@
             padding-top: 1rem;
             border-top: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .review-date {
             color: rgba(245, 247, 251, 0.6);
             font-size: 0.9rem;
         }
-        
+
         .review-course {
             background: rgba(0, 229, 196, 0.1);
             color: var(--neon-teal);
@@ -113,7 +114,7 @@
             border-radius: 50px;
             font-size: 0.8rem;
         }
-        
+
         .stats-overview {
             background: rgba(245, 247, 251, 0.05);
             border: 1px solid rgba(245, 247, 251, 0.1);
@@ -121,46 +122,46 @@
             padding: 3rem;
             margin-bottom: 3rem;
         }
-        
+
         .overall-rating {
             text-align: center;
             margin-bottom: 2rem;
         }
-        
+
         .rating-number {
             font-size: 4rem;
             font-weight: bold;
             color: var(--neon-teal);
             margin-bottom: 0.5rem;
         }
-        
+
         .rating-stars {
             display: flex;
             justify-content: center;
             gap: 0.25rem;
             margin-bottom: 0.5rem;
         }
-        
+
         .rating-count {
             color: rgba(245, 247, 251, 0.7);
         }
-        
+
         .rating-breakdown {
             margin-bottom: 1rem;
         }
-        
+
         .rating-bar {
             display: flex;
             align-items: center;
             margin-bottom: 0.75rem;
         }
-        
+
         .rating-label {
             width: 80px;
             color: rgba(245, 247, 251, 0.7);
             font-size: 0.9rem;
         }
-        
+
         .rating-progress {
             flex: 1;
             height: 8px;
@@ -169,27 +170,27 @@
             margin: 0 1rem;
             overflow: hidden;
         }
-        
+
         .rating-progress-fill {
             height: 100%;
             background: var(--neon-teal);
             border-radius: 4px;
         }
-        
+
         .rating-percentage {
             width: 50px;
             color: rgba(245, 247, 251, 0.7);
             font-size: 0.9rem;
             text-align: right;
         }
-        
+
         .filter-tabs {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
             border-bottom: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .filter-tab {
             background: none;
             border: none;
@@ -199,12 +200,12 @@
             position: relative;
             transition: color 0.3s ease;
         }
-        
+
         .filter-tab:hover,
         .filter-tab.active {
             color: var(--cloud-white);
         }
-        
+
         .filter-tab.active::after {
             content: '';
             position: absolute;
@@ -214,7 +215,7 @@
             height: 3px;
             background: var(--neon-teal);
         }
-        
+
         .write-review-btn {
             position: fixed;
             bottom: 2rem;
@@ -233,13 +234,14 @@
             transition: all 0.3s ease;
             z-index: 1000;
         }
-        
+
         .write-review-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 15px 35px rgba(0, 229, 196, 0.4);
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -253,7 +255,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Home
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="homeDropdown">
@@ -280,18 +283,18 @@
                         <a class="nav-link" href="blog.html">Blog</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Admin
+                        <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dashboards
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
                             <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                            <li><a class="dropdown-item" href="dashboard.html">Student Dashboard</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
-                    <a href="register.html" class="btn btn-primary">Register</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -335,7 +338,7 @@
                             <div class="rating-count">Based on 1,247 reviews</div>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-8">
                         <h5 class="text-white mb-3">Rating Breakdown</h5>
                         <div class="rating-breakdown">
@@ -416,7 +419,10 @@
                             <i class="bi bi-star-fill star"></i>
                         </div>
                         <div class="review-content">
-                            "TechBootcamp completely transformed my career! I went from having zero coding experience to landing my dream job at Google in just 12 weeks. The instructors are amazing, the curriculum is comprehensive, and the career support team helped me prepare for interviews perfectly. The hands-on projects gave me the confidence I needed to succeed in the real world."
+                            "TechBootcamp completely transformed my career! I went from having zero coding experience to
+                            landing my dream job at Google in just 12 weeks. The instructors are amazing, the curriculum
+                            is comprehensive, and the career support team helped me prepare for interviews perfectly.
+                            The hands-on projects gave me the confidence I needed to succeed in the real world."
                         </div>
                         <div class="review-meta">
                             <span class="review-date">2 weeks ago</span>
@@ -441,7 +447,10 @@
                             <i class="bi bi-star-fill star"></i>
                         </div>
                         <div class="review-content">
-                            "The Data Science program exceeded my expectations. The curriculum covers everything from Python basics to advanced machine learning algorithms. What really stood out was the quality of the projects - they're challenging but realistic and prepare you for real-world data science work. I doubled my salary after completing this bootcamp!"
+                            "The Data Science program exceeded my expectations. The curriculum covers everything from
+                            Python basics to advanced machine learning algorithms. What really stood out was the quality
+                            of the projects - they're challenging but realistic and prepare you for real-world data
+                            science work. I doubled my salary after completing this bootcamp!"
                         </div>
                         <div class="review-meta">
                             <span class="review-date">1 month ago</span>
@@ -466,7 +475,10 @@
                             <i class="bi bi-star-fill star"></i>
                         </div>
                         <div class="review-content">
-                            "As someone with no prior programming experience, I was nervous about learning mobile development. But the instructors at TechBootcamp are patient and incredibly knowledgeable. The step-by-step approach and hands-on projects made complex concepts easy to understand. I now have a portfolio of 5 mobile apps and a job I love!"
+                            "As someone with no prior programming experience, I was nervous about learning mobile
+                            development. But the instructors at TechBootcamp are patient and incredibly knowledgeable.
+                            The step-by-step approach and hands-on projects made complex concepts easy to understand. I
+                            now have a portfolio of 5 mobile apps and a job I love!"
                         </div>
                         <div class="review-meta">
                             <span class="review-date">3 weeks ago</span>
@@ -491,7 +503,10 @@
                             <i class="bi bi-star star"></i>
                         </div>
                         <div class="review-content">
-                            "The career support services are outstanding! From resume building to mock interviews, they prepare you for every aspect of the job search. The hiring network is extensive - I had multiple interviews lined up before I even graduated. The negotiation coaching helped me secure a 20% higher salary than I initially expected."
+                            "The career support services are outstanding! From resume building to mock interviews, they
+                            prepare you for every aspect of the job search. The hiring network is extensive - I had
+                            multiple interviews lined up before I even graduated. The negotiation coaching helped me
+                            secure a 20% higher salary than I initially expected."
                         </div>
                         <div class="review-meta">
                             <span class="review-date">2 months ago</span>
@@ -543,17 +558,65 @@
     </button>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
+    <footer class="footer py-5 mt-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-4">
+                        <a class="navbar-brand fw-bold" href="index.html">
+                            <i class="bi bi-code-slash"></i> TechBootcamp
+                        </a>
+                    </div>
+                    <p class="footer-description text-muted mb-4">
+                        Transform your future with industry-leading code education. Join thousands of successful
+                        graduates working at top tech companies worldwide.
+                    </p>
+                    <div class="social-links d-flex gap-3">
+                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-light me-3">Privacy</a>
-                    <a href="#" class="text-light me-3">Terms</a>
-                    <a href="#" class="text-light">Contact</a>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Programs</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="courses.html">Web Development</a></li>
+                        <li><a href="courses.html">Data Science</a></li>
+                        <li><a href="courses.html">Mobile App Dev</a></li>
+                        <li><a href="programs.html">Part-time Coding</a></li>
+                    </ul>
                 </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Resources</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="blog.html">Tech Blog</a></li>
+                        <li><a href="reviews.html">Success Stories</a></li>
+                        <li><a href="career.html">Career Support</a></li>
+                        <li><a href="admissions.html">How to Apply</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-title mb-4">Newsletter</h5>
+                    <p class="text-muted mb-4">Stay updated with the latest tech trends and cohort openings.</p>
+                    <form class="newsletter-form mb-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email Address" required>
+                            <button class="btn btn-primary" type="submit">Join</button>
+                        </div>
+                    </form>
+                    <div class="footer-legal d-flex gap-3">
+                        <a href="#" class="text-muted small">Privacy Policy</a>
+                        <a href="#" class="text-muted small">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 border-secondary opacity-25">
+            <div class="footer-bottom text-center">
+                <p class="mb-0 text-muted">&copy; 2026 TechBootcamp. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -562,10 +625,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/main.js"></script>
-    
+
     <script>
         // Reviews page functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Animate review cards on scroll
             gsap.utils.toArray('.review-card').forEach((card, index) => {
                 gsap.from(card, {
@@ -581,7 +644,7 @@
                     ease: 'power2.out'
                 });
             });
-            
+
             // Animate stats overview
             gsap.from('.stats-overview', {
                 scrollTrigger: {
@@ -595,16 +658,16 @@
                 ease: 'power2.out'
             });
         });
-        
+
         // Filter reviews
         function filterReviews(category) {
             const tabs = document.querySelectorAll('.filter-tab');
             const reviews = document.querySelectorAll('.review-card');
-            
+
             // Update active tab
             tabs.forEach(tab => tab.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             // Filter reviews
             reviews.forEach(review => {
                 if (category === 'all' || review.dataset.category === category) {
@@ -614,11 +677,12 @@
                 }
             });
         }
-        
+
         // Show review modal (placeholder)
         function showReviewModal() {
             showNotification('Review form coming soon! Please login to write a review.', 'info');
         }
     </script>
 </body>
+
 </html>

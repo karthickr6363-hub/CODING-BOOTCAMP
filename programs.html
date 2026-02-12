@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programs - TechBootcamp</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -17,14 +18,14 @@
     <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <style>
         /* Programs Page Specific Styles */
         .programs-hero {
             background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
             padding: 8rem 0 4rem;
         }
-        
+
         .program-card {
             background: rgba(245, 247, 251, 0.05);
             border: 1px solid rgba(245, 247, 251, 0.1);
@@ -34,111 +35,114 @@
             height: 100%;
             position: relative;
         }
-        
+
         .program-card:hover {
             transform: translateY(-15px);
             border-color: var(--neon-teal);
             box-shadow: 0 25px 50px rgba(0, 229, 196, 0.25);
         }
-        
+
         .program-header {
             background: linear-gradient(135deg, rgba(0, 229, 196, 0.15) 0%, rgba(0, 229, 196, 0.05) 100%);
             padding: 2rem;
             text-align: center;
             border-bottom: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .program-icon {
             font-size: 4rem;
             color: var(--neon-teal);
             margin-bottom: 1rem;
         }
-        
+
         .program-title {
             color: var(--cloud-white);
             font-size: 1.8rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
-        
+
         .program-subtitle {
             color: rgba(245, 247, 251, 0.7);
             font-size: 1rem;
         }
-        
+
         .program-body {
             padding: 2rem;
         }
-        
+
         .program-features {
             list-style: none;
             padding: 0;
             margin-bottom: 2rem;
         }
-        
+
         .program-features li {
             color: rgba(245, 247, 251, 0.8);
             margin-bottom: 1rem;
-            padding-left: 2rem;
+            padding-left: 0;
             position: relative;
+            text-align: center;
         }
-        
+
         .program-features li::before {
             content: '✓';
-            position: absolute;
-            left: 0;
+            margin-right: 0.5rem;
             color: var(--neon-teal);
             font-weight: bold;
         }
-        
+
         .program-schedule {
             background: rgba(245, 247, 251, 0.05);
             border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            text-align: center;
         }
-        
+
         .schedule-item {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 1rem;
             color: rgba(245, 247, 251, 0.8);
         }
-        
+
         .schedule-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .program-footer {
             padding: 2rem;
             border-top: 1px solid rgba(245, 247, 251, 0.1);
             text-align: center;
         }
-        
+
         .program-price {
             font-size: 2.5rem;
             font-weight: bold;
             color: var(--neon-teal);
             margin-bottom: 1rem;
         }
-        
+
         .program-price small {
             font-size: 1rem;
             color: rgba(245, 247, 251, 0.7);
         }
-        
+
         .comparison-table {
             background: rgba(245, 247, 251, 0.05);
             border-radius: 15px;
-            overflow: hidden;
+            overflow-x: auto;
             border: 1px solid rgba(245, 247, 251, 0.1);
+            -webkit-overflow-scrolling: touch;
         }
-        
+
         .comparison-table table {
             margin-bottom: 0;
+            min-width: 800px;
         }
-        
+
         .comparison-table th {
             background: rgba(0, 229, 196, 0.1);
             color: var(--neon-teal);
@@ -146,18 +150,18 @@
             border: none;
             padding: 1.5rem;
         }
-        
+
         .comparison-table td {
             color: var(--cloud-white);
             border-color: rgba(245, 247, 251, 0.1);
             padding: 1.5rem;
         }
-        
+
         .comparison-table .check-icon {
             color: var(--neon-teal);
             font-size: 1.5rem;
         }
-        
+
         .corporate-section {
             background: rgba(245, 247, 251, 0.03);
             border-radius: 20px;
@@ -165,34 +169,34 @@
             margin-top: 3rem;
             border: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .corporate-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-        
+
         .corporate-feature {
             text-align: center;
         }
-        
+
         .corporate-feature i {
             font-size: 3rem;
             color: var(--neon-teal);
             margin-bottom: 1rem;
         }
-        
+
         .corporate-feature h5 {
             color: var(--cloud-white);
             margin-bottom: 0.5rem;
         }
-        
+
         .corporate-feature p {
             color: rgba(245, 247, 251, 0.7);
             font-size: 0.9rem;
         }
-        
+
         .badge-featured {
             background: var(--neon-teal);
             color: var(--midnight-blue);
@@ -204,6 +208,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -217,7 +222,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Home
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="homeDropdown">
@@ -244,18 +250,18 @@
                         <a class="nav-link" href="blog.html">Blog</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Admin
+                        <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dashboards
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
                             <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                            <li><a class="dropdown-item" href="dashboard.html">Student Dashboard</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
-                    <a href="register.html" class="btn btn-primary">Register</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -290,7 +296,7 @@
                     <div class="program-card">
                         <div class="program-header">
                             <div class="program-icon">
-                                <i class="bi bi-calendar-weekend"></i>
+                                <i class="bi bi-calendar-week"></i>
                             </div>
                             <h3 class="program-title">Weekend Bootcamp</h3>
                             <p class="program-subtitle">Learn while you work</p>
@@ -304,15 +310,15 @@
                                 <li>Peer learning groups</li>
                                 <li>Career services included</li>
                             </ul>
-                            
+
                             <div class="program-schedule">
                                 <h5 class="text-teal mb-3">Schedule</h5>
                                 <div class="schedule-item">
-                                    <span>Saturday</span>
+                                    <span class="fw-bold">Saturday</span>
                                     <span>9:00 AM - 5:00 PM</span>
                                 </div>
                                 <div class="schedule-item">
-                                    <span>Sunday</span>
+                                    <span class="fw-bold">Sunday</span>
                                     <span>10:00 AM - 2:00 PM</span>
                                 </div>
                             </div>
@@ -349,15 +355,15 @@
                                 <li>Daily coding challenges</li>
                                 <li>Job guarantee available</li>
                             </ul>
-                            
+
                             <div class="program-schedule">
                                 <h5 class="text-teal mb-3">Schedule</h5>
                                 <div class="schedule-item">
-                                    <span>Monday - Friday</span>
+                                    <span class="fw-bold">Monday - Friday</span>
                                     <span>9:00 AM - 6:00 PM</span>
                                 </div>
                                 <div class="schedule-item">
-                                    <span>Evening Study</span>
+                                    <span class="fw-bold">Evening Study</span>
                                     <span>7:00 PM - 9:00 PM</span>
                                 </div>
                             </div>
@@ -391,15 +397,15 @@
                                 <li>Progress tracking</li>
                                 <li>Post-training support</li>
                             </ul>
-                            
+
                             <div class="program-schedule">
                                 <h5 class="text-teal mb-3">Schedule</h5>
                                 <div class="schedule-item">
-                                    <span>Custom</span>
+                                    <span class="fw-bold">Custom</span>
                                     <span>Based on needs</span>
                                 </div>
                                 <div class="schedule-item">
-                                    <span>Duration</span>
+                                    <span class="fw-bold">Duration</span>
                                     <span>4-16 weeks</span>
                                 </div>
                             </div>
@@ -424,7 +430,7 @@
                 <h2 class="display-5 fw-bold">Compare Programs</h2>
                 <p class="lead">Find the perfect fit for your learning style</p>
             </div>
-            
+
             <div class="comparison-table">
                 <table class="table table-dark">
                     <thead>
@@ -492,7 +498,7 @@
                     <h2 class="display-5 fw-bold">Corporate Training Solutions</h2>
                     <p class="lead">Empower your team with cutting-edge tech skills</p>
                 </div>
-                
+
                 <div class="corporate-features">
                     <div class="corporate-feature">
                         <i class="bi bi-people"></i>
@@ -515,7 +521,7 @@
                         <p>Post-training mentorship and consultation services</p>
                     </div>
                 </div>
-                
+
                 <div class="text-center mt-5">
                     <h4 class="text-teal mb-3">Trusted by Leading Companies</h4>
                     <div class="row justify-content-center">
@@ -561,17 +567,65 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
+    <footer class="footer py-5 mt-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-4">
+                        <a class="navbar-brand fw-bold" href="index.html">
+                            <i class="bi bi-code-slash"></i> TechBootcamp
+                        </a>
+                    </div>
+                    <p class="footer-description text-muted mb-4">
+                        Transform your future with industry-leading code education. Join thousands of successful
+                        graduates working at top tech companies worldwide.
+                    </p>
+                    <div class="social-links d-flex gap-3">
+                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-light me-3">Privacy</a>
-                    <a href="#" class="text-light me-3">Terms</a>
-                    <a href="#" class="text-light">Contact</a>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Programs</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="courses.html">Web Development</a></li>
+                        <li><a href="courses.html">Data Science</a></li>
+                        <li><a href="courses.html">Mobile App Dev</a></li>
+                        <li><a href="programs.html">Part-time Coding</a></li>
+                    </ul>
                 </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Resources</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="blog.html">Tech Blog</a></li>
+                        <li><a href="reviews.html">Success Stories</a></li>
+                        <li><a href="career.html">Career Support</a></li>
+                        <li><a href="admissions.html">How to Apply</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-title mb-4">Newsletter</h5>
+                    <p class="text-muted mb-4">Stay updated with the latest tech trends and cohort openings.</p>
+                    <form class="newsletter-form mb-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email Address" required>
+                            <button class="btn btn-primary" type="submit">Join</button>
+                        </div>
+                    </form>
+                    <div class="footer-legal d-flex gap-3">
+                        <a href="#" class="text-muted small">Privacy Policy</a>
+                        <a href="#" class="text-muted small">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 border-secondary opacity-25">
+            <div class="footer-bottom text-center">
+                <p class="mb-0 text-muted">&copy; 2026 TechBootcamp. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -580,10 +634,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/main.js"></script>
-    
+
     <script>
         // Programs page animations
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Animate program cards on scroll
             gsap.utils.toArray('.program-card').forEach((card, index) => {
                 gsap.from(card, {
@@ -599,7 +653,7 @@
                     ease: 'power2.out'
                 });
             });
-            
+
             // Animate comparison table
             gsap.from('.comparison-table', {
                 scrollTrigger: {
@@ -612,7 +666,7 @@
                 opacity: 0,
                 ease: 'power2.out'
             });
-            
+
             // Animate corporate features
             gsap.utils.toArray('.corporate-feature').forEach((feature, index) => {
                 gsap.from(feature, {
@@ -631,4 +685,5 @@
         });
     </script>
 </body>
+
 </html>

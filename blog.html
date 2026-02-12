@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - TechBootcamp</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -17,14 +18,14 @@
     <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <style>
         /* Blog Page Specific Styles */
         .blog-hero {
             background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
             padding: 8rem 0 4rem;
         }
-        
+
         .blog-card {
             background: rgba(245, 247, 251, 0.05);
             border: 1px solid rgba(245, 247, 251, 0.1);
@@ -34,32 +35,36 @@
             height: 100%;
             position: relative;
         }
-        
+
         .blog-card:hover {
             transform: translateY(-10px);
             border-color: var(--neon-teal);
             box-shadow: 0 20px 40px rgba(0, 229, 196, 0.2);
         }
-        
+
         .blog-image {
-            height: 200px;
-            background: linear-gradient(135deg, rgba(0, 229, 196, 0.2) 0%, rgba(0, 229, 196, 0.05) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 220px;
+            background-size: cover;
+            background-position: center;
             position: relative;
             overflow: hidden;
         }
-        
-        .blog-image i {
-            font-size: 3rem;
-            color: var(--neon-teal);
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
         .blog-content {
             padding: 2rem;
         }
-        
+
         .blog-category {
             display: inline-block;
             background: rgba(0, 229, 196, 0.1);
@@ -70,7 +75,7 @@
             font-weight: 600;
             margin-bottom: 1rem;
         }
-        
+
         .blog-title {
             color: var(--cloud-white);
             font-size: 1.3rem;
@@ -78,13 +83,13 @@
             margin-bottom: 1rem;
             line-height: 1.4;
         }
-        
+
         .blog-excerpt {
             color: rgba(245, 247, 251, 0.8);
             margin-bottom: 1.5rem;
             line-height: 1.6;
         }
-        
+
         .blog-meta {
             display: flex;
             justify-content: space-between;
@@ -92,12 +97,12 @@
             padding-top: 1rem;
             border-top: 1px solid rgba(245, 247, 251, 0.1);
         }
-        
+
         .blog-author {
             display: flex;
             align-items: center;
         }
-        
+
         .author-avatar {
             width: 30px;
             height: 30px;
@@ -111,17 +116,17 @@
             font-size: 0.8rem;
             margin-right: 0.5rem;
         }
-        
+
         .author-name {
             color: rgba(245, 247, 251, 0.9);
             font-size: 0.9rem;
         }
-        
+
         .blog-date {
             color: rgba(245, 247, 251, 0.6);
             font-size: 0.9rem;
         }
-        
+
         .featured-post {
             background: rgba(245, 247, 251, 0.05);
             border: 1px solid rgba(245, 247, 251, 0.1);
@@ -131,7 +136,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .featured-post::before {
             content: 'FEATURED';
             position: absolute;
@@ -144,46 +149,44 @@
             font-size: 0.7rem;
             font-weight: bold;
         }
-        
+
         .featured-content {
             display: flex;
             gap: 2rem;
             align-items: center;
         }
-        
+
         .featured-image {
-            width: 200px;
-            height: 150px;
-            background: linear-gradient(135deg, rgba(0, 229, 196, 0.2) 0%, rgba(0, 229, 196, 0.05) 100%);
+            width: 300px;
+            height: 200px;
             border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow: hidden;
             flex-shrink: 0;
         }
-        
-        .featured-image i {
-            font-size: 3rem;
-            color: var(--neon-teal);
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        
+
         .featured-text h3 {
             color: var(--cloud-white);
             margin-bottom: 1rem;
         }
-        
+
         .featured-text p {
             color: rgba(245, 247, 251, 0.8);
             margin-bottom: 1rem;
         }
-        
+
         .category-filter {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-        
+
         .category-btn {
             background: rgba(245, 247, 251, 0.1);
             border: 1px solid rgba(245, 247, 251, 0.2);
@@ -193,14 +196,14 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .category-btn:hover,
         .category-btn.active {
             background: var(--neon-teal);
             color: var(--midnight-blue);
             border-color: var(--neon-teal);
         }
-        
+
         .newsletter-section {
             background: rgba(0, 229, 196, 0.1);
             border: 1px solid rgba(0, 229, 196, 0.2);
@@ -209,14 +212,14 @@
             margin-top: 3rem;
             text-align: center;
         }
-        
+
         .newsletter-form {
             display: flex;
             gap: 1rem;
             max-width: 500px;
             margin: 2rem auto 0;
         }
-        
+
         .newsletter-input {
             flex: 1;
             background: rgba(245, 247, 251, 0.1);
@@ -226,32 +229,33 @@
             border-radius: 50px;
             transition: all 0.3s ease;
         }
-        
+
         .newsletter-input:focus {
             outline: none;
             border-color: var(--neon-teal);
             background: rgba(245, 247, 251, 0.15);
         }
-        
+
         .newsletter-input::placeholder {
             color: rgba(245, 247, 251, 0.5);
         }
-        
+
         @media (max-width: 768px) {
             .featured-content {
                 flex-direction: column;
             }
-            
+
             .featured-image {
                 width: 100%;
             }
-            
+
             .newsletter-form {
                 flex-direction: column;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -265,7 +269,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="homeDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Home
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="homeDropdown">
@@ -292,18 +297,18 @@
                         <a class="nav-link" href="blog.html">Blog</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminMenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Admin
+                        <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dashboards
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                        <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
                             <li><a class="dropdown-item" href="admin.html">Admin Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">Student Management</a></li>
+                            <li><a class="dropdown-item" href="dashboard.html">Student Dashboard</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="login.html" class="btn btn-outline-light me-2">Login</a>
-                    <a href="register.html" class="btn btn-primary">Register</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -335,11 +340,14 @@
             <div class="featured-post">
                 <div class="featured-content">
                     <div class="featured-image">
-                        <i class="bi bi-lightning-charge"></i>
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+                            alt="Essential Developer Skills">
                     </div>
                     <div class="featured-text">
                         <h3>10 Essential Skills Every Developer Needs in 2024</h3>
-                        <p>Discover the most in-demand technical and soft skills that will help you stand out in the competitive tech job market. From AI integration to effective communication, learn what top companies are looking for.</p>
+                        <p>Discover the most in-demand technical and soft skills that will help you stand out in the
+                            competitive tech job market. From AI integration to effective communication, learn what top
+                            companies are looking for.</p>
                         <div class="blog-meta">
                             <div class="blog-author">
                                 <div class="author-avatar">SK</div>
@@ -374,12 +382,14 @@
                 <div class="col-lg-4 col-md-6 blog-post" data-category="tutorials">
                     <div class="blog-card">
                         <div class="blog-image">
-                            <i class="bi bi-code-square"></i>
+                            <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80"
+                                alt="React App Tutorial">
                         </div>
                         <div class="blog-content">
                             <span class="blog-category">Tutorial</span>
                             <h3 class="blog-title">Building Your First React App: A Complete Guide</h3>
-                            <p class="blog-excerpt">Learn how to create a modern React application from scratch. This comprehensive tutorial covers components, state management, and deployment.</p>
+                            <p class="blog-excerpt">Learn how to create a modern React application from scratch. This
+                                comprehensive tutorial covers components, state management, and deployment.</p>
                             <div class="blog-meta">
                                 <div class="blog-author">
                                     <div class="author-avatar">JD</div>
@@ -395,12 +405,14 @@
                 <div class="col-lg-4 col-md-6 blog-post" data-category="career">
                     <div class="blog-card">
                         <div class="blog-image">
-                            <i class="bi bi-briefcase"></i>
+                            <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=80"
+                                alt="Technical Interview Tips">
                         </div>
                         <div class="blog-content">
                             <span class="blog-category">Career Advice</span>
                             <h3 class="blog-title">How to Ace Your Technical Interview</h3>
-                            <p class="blog-excerpt">Expert tips and strategies for technical interviews. Learn how to solve coding problems, communicate effectively, and impress your interviewers.</p>
+                            <p class="blog-excerpt">Expert tips and strategies for technical interviews. Learn how to
+                                solve coding problems, communicate effectively, and impress your interviewers.</p>
                             <div class="blog-meta">
                                 <div class="blog-author">
                                     <div class="author-avatar">MC</div>
@@ -416,12 +428,14 @@
                 <div class="col-lg-4 col-md-6 blog-post" data-category="tech">
                     <div class="blog-card">
                         <div class="blog-image">
-                            <i class="bi bi-cpu"></i>
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80"
+                                alt="AI in Web Dev">
                         </div>
                         <div class="blog-content">
                             <span class="blog-category">Tech News</span>
                             <h3 class="blog-title">The Rise of AI in Web Development</h3>
-                            <p class="blog-excerpt">Explore how artificial intelligence is transforming the web development landscape. From AI-powered coding assistants to automated testing.</p>
+                            <p class="blog-excerpt">Explore how artificial intelligence is transforming the web
+                                development landscape. From AI-powered coding assistants to automated testing.</p>
                             <div class="blog-meta">
                                 <div class="blog-author">
                                     <div class="author-avatar">AL</div>
@@ -437,12 +451,14 @@
                 <div class="col-lg-4 col-md-6 blog-post" data-category="success">
                     <div class="blog-card">
                         <div class="blog-image">
-                            <i class="bi bi-trophy"></i>
+                            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80"
+                                alt="Success Story Sarah">
                         </div>
                         <div class="blog-content">
                             <span class="blog-category">Success Story</span>
                             <h3 class="blog-title">From Barista to Full Stack Developer</h3>
-                            <p class="blog-excerpt">Read Sarah's inspiring journey of transitioning from a coffee shop job to a lucrative career in tech through our bootcamp program.</p>
+                            <p class="blog-excerpt">Read Sarah's inspiring journey of transitioning from a coffee shop
+                                job to a lucrative career in tech through our bootcamp program.</p>
                             <div class="blog-meta">
                                 <div class="blog-author">
                                     <div class="author-avatar">TW</div>
@@ -458,12 +474,14 @@
                 <div class="col-lg-4 col-md-6 blog-post" data-category="tutorials">
                     <div class="blog-card">
                         <div class="blog-image">
-                            <i class="bi bi-database"></i>
+                            <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80"
+                                alt="Database Design">
                         </div>
                         <div class="blog-content">
                             <span class="blog-category">Tutorial</span>
                             <h3 class="blog-title">Database Design Best Practices</h3>
-                            <p class="blog-excerpt">Learn the fundamentals of database design and optimization. Covering normalization, indexing, and query optimization techniques.</p>
+                            <p class="blog-excerpt">Learn the fundamentals of database design and optimization. Covering
+                                normalization, indexing, and query optimization techniques.</p>
                             <div class="blog-meta">
                                 <div class="blog-author">
                                     <div class="author-avatar">RP</div>
@@ -479,12 +497,14 @@
                 <div class="col-lg-4 col-md-6 blog-post" data-category="career">
                     <div class="blog-card">
                         <div class="blog-image">
-                            <i class="bi bi-graph-up"></i>
+                            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80"
+                                alt="Salary Negotiation">
                         </div>
                         <div class="blog-content">
                             <span class="blog-category">Career Advice</span>
                             <h3 class="blog-title">Salary Negotiation Tips for Developers</h3>
-                            <p class="blog-excerpt">Master the art of salary negotiation with proven strategies. Learn how to research market rates and advocate for your worth.</p>
+                            <p class="blog-excerpt">Master the art of salary negotiation with proven strategies. Learn
+                                how to research market rates and advocate for your worth.</p>
                             <div class="blog-meta">
                                 <div class="blog-author">
                                     <div class="author-avatar">EJ</div>
@@ -514,17 +534,65 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
+    <footer class="footer py-5 mt-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; 2026 TechBootcamp. All rights reserved.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-4">
+                        <a class="navbar-brand fw-bold" href="index.html">
+                            <i class="bi bi-code-slash"></i> TechBootcamp
+                        </a>
+                    </div>
+                    <p class="footer-description text-muted mb-4">
+                        Transform your future with industry-leading code education. Join thousands of successful
+                        graduates working at top tech companies worldwide.
+                    </p>
+                    <div class="social-links d-flex gap-3">
+                        <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-light me-3">Privacy</a>
-                    <a href="#" class="text-light me-3">Terms</a>
-                    <a href="#" class="text-light">Contact</a>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Programs</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="courses.html">Web Development</a></li>
+                        <li><a href="courses.html">Data Science</a></li>
+                        <li><a href="courses.html">Mobile App Dev</a></li>
+                        <li><a href="programs.html">Part-time Coding</a></li>
+                    </ul>
                 </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title mb-4">Resources</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="blog.html">Tech Blog</a></li>
+                        <li><a href="reviews.html">Success Stories</a></li>
+                        <li><a href="career.html">Career Support</a></li>
+                        <li><a href="admissions.html">How to Apply</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-title mb-4">Newsletter</h5>
+                    <p class="text-muted mb-4">Stay updated with the latest tech trends and cohort openings.</p>
+                    <form class="newsletter-form mb-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email Address" required>
+                            <button class="btn btn-primary" type="submit">Join</button>
+                        </div>
+                    </form>
+                    <div class="footer-legal d-flex gap-3">
+                        <a href="#" class="text-muted small">Privacy Policy</a>
+                        <a href="#" class="text-muted small">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 border-secondary opacity-25">
+            <div class="footer-bottom text-center">
+                <p class="mb-0 text-muted">&copy; 2026 TechBootcamp. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -533,10 +601,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/main.js"></script>
-    
+
     <script>
         // Blog page functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Animate featured post
             gsap.from('.featured-post', {
                 scrollTrigger: {
@@ -549,7 +617,7 @@
                 opacity: 0,
                 ease: 'power2.out'
             });
-            
+
             // Animate blog cards on scroll
             gsap.utils.toArray('.blog-card').forEach((card, index) => {
                 gsap.from(card, {
@@ -566,16 +634,16 @@
                 });
             });
         });
-        
+
         // Filter blog posts
         function filterPosts(category) {
             const buttons = document.querySelectorAll('.category-btn');
             const posts = document.querySelectorAll('.blog-post');
-            
+
             // Update active button
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             // Filter posts
             posts.forEach(post => {
                 if (category === 'all' || post.dataset.category === category) {
@@ -585,7 +653,7 @@
                 }
             });
         }
-        
+
         // Newsletter subscription
         function subscribeNewsletter(event) {
             event.preventDefault();
@@ -595,4 +663,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TechBootcamp</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        .admin-container {
+            background: var(--midnight-blue);
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: rgba(10, 16, 36, 0.95);
+            min-height: 100vh;
+            border-right: 1px solid rgba(245, 247, 251, 0.1);
+            position: sticky;
+            top: 0;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .stat-card-admin {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card-admin:hover {
+            border-color: var(--neon-teal);
+            transform: translateY(-5px);
+            background: rgba(0, 229, 196, 0.05);
+        }
+
+        .admin-table {
+            background: rgba(245, 247, 251, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(245, 247, 251, 0.05);
+        }
+
+        .admin-table th {
+            background: rgba(245, 247, 251, 0.05);
+            color: var(--neon-teal);
+            border: none;
+            padding: 1.2rem;
+        }
+
+        .admin-table td {
+            color: rgba(245, 247, 251, 0.8);
+            border-bottom: 1px solid rgba(245, 247, 251, 0.05);
+            padding: 1.2rem;
+            vertical-align: middle;
+        }
+
+        .nav-link-admin {
+            color: rgba(245, 247, 251, 0.8);
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-decoration: none;
+        }
+
+        .nav-link-admin:hover,
+        .nav-link-admin.active {
+            background: rgba(0, 229, 196, 0.1);
+            color: var(--neon-teal);
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(0, 229, 196, 0.1);
+            color: var(--neon-teal);
+            border: 1px solid var(--neon-teal);
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border: 1px solid #ffc107;
+        }
+
+        .admin-search {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            color: var(--cloud-white);
+            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+        }
+
+        .admin-search:focus {
+            background: rgba(0, 229, 196, 0.05);
+            border-color: var(--neon-teal);
+            color: var(--cloud-white);
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 col-lg-2 p-0">
+                    <div class="sidebar p-4">
+                        <div class="mb-5 text-center">
+                            <a href="index.html" class="navbar-brand fw-bold mb-0">
+                                <i class="bi bi-code-slash text-teal"></i> TechBootcamp
+                            </a>
+                        </div>
+
+                        <nav>
+                            <a href="#" class="nav-link-admin active"><i
+                                    class="bi bi-speedometer2 me-2"></i>Overview</a>
+                            <a href="#" class="nav-link-admin"><i class="bi bi-people me-2"></i>Students</a>
+                            <a href="#" class="nav-link-admin"><i class="bi bi-journal-text me-2"></i>Courses</a>
+                            <a href="#" class="nav-link-admin"><i
+                                    class="bi bi-file-earmark-text me-2"></i>Admissions</a>
+                            <a href="#" class="nav-link-admin"><i class="bi bi-currency-dollar me-2"></i>Revenue</a>
+                            <a href="#" class="nav-link-admin"><i class="bi bi-chat-dots me-2"></i>Messages</a>
+                            <hr class="border-secondary opacity-25 my-4">
+                            <a href="#" class="nav-link-admin"><i class="bi bi-gear me-2"></i>Settings</a>
+                            <a href="index.html" class="nav-link-admin mt-4 text-danger"><i
+                                    class="bi bi-box-arrow-left me-2"></i>Logout</a>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-9 col-lg-10">
+                    <div class="main-content">
+                        <!-- Header -->
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                            <div>
+                                <h2 class="text-white fw-bold mb-1">Admin Dashboard</h2>
+                                <p class="text-muted small mb-0">System Overview & Management</p>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="input-group" style="width: 300px;">
+                                    <span
+                                        class="input-group-text bg-transparent border-end-0 border-secondary opacity-50"><i
+                                            class="bi bi-search text-muted"></i></span>
+                                    <input type="text" class="form-control admin-search border-start-0"
+                                        placeholder="Search anything...">
+                                </div>
+                                <button class="btn btn-outline-light rounded-circle border-secondary opacity-50 p-2"><i
+                                        class="bi bi-bell"></i></button>
+                                <div
+                                    class="admin-profile d-flex align-items-center gap-2 ps-3 border-start border-secondary border-opacity-25">
+                                    <div class="avatar-sm rounded-circle bg-teal d-flex align-items-center justify-content-center text-midnight fw-bold"
+                                        style="width: 40px; height: 40px; background: var(--neon-teal); color: var(--midnight-blue);">
+                                        AD</div>
+                                    <div class="d-none d-lg-block">
+                                        <div class="text-white small fw-bold">Admin User</div>
+                                        <div class="text-muted" style="font-size: 0.7rem;">Super Admin</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="row mb-5">
+                            <div class="col-md-3">
+                                <div class="stat-card-admin">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="stat-icon-bg p-3 rounded-4"
+                                            style="background: rgba(0, 229, 196, 0.1); color: var(--neon-teal);">
+                                            <i class="bi bi-people fs-4"></i>
+                                        </div>
+                                        <span class="text-teal small">+12% <i class="bi bi-arrow-up"></i></span>
+                                    </div>
+                                    <h3 class="text-white fw-bold mb-1">1,284</h3>
+                                    <p class="text-muted small mb-0">Total Students</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card-admin">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="stat-icon-bg p-3 rounded-4"
+                                            style="background: rgba(13, 110, 253, 0.1); color: #0d6efd;">
+                                            <i class="bi bi-journal-code fs-4"></i>
+                                        </div>
+                                        <span class="text-primary small">+5% <i class="bi bi-arrow-up"></i></span>
+                                    </div>
+                                    <h3 class="text-white fw-bold mb-1">24</h3>
+                                    <p class="text-muted small mb-0">Active Courses</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card-admin">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="stat-icon-bg p-3 rounded-4"
+                                            style="background: rgba(255, 193, 7, 0.1); color: #ffc107;">
+                                            <i class="bi bi-envelope-check fs-4"></i>
+                                        </div>
+                                        <span class="text-warning small">+18% <i class="bi bi-arrow-up"></i></span>
+                                    </div>
+                                    <h3 class="text-white fw-bold mb-1">156</h3>
+                                    <p class="text-muted small mb-0">Pending Applications</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card-admin">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="stat-icon-bg p-3 rounded-4"
+                                            style="background: rgba(0, 229, 196, 0.1); color: var(--neon-teal);">
+                                            <i class="bi bi-currency-dollar fs-4"></i>
+                                        </div>
+                                        <span class="text-teal small">+24% <i class="bi bi-arrow-up"></i></span>
+                                    </div>
+                                    <h3 class="text-white fw-bold mb-1">$42.5K</h3>
+                                    <p class="text-muted small mb-0">Monthly Revenue</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity Table -->
+                        <div class="admin-table-container">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="text-white fw-bold mb-0">Recent Admissions</h4>
+                                <button class="btn btn-link text-teal text-decoration-none p-0">View All <i
+                                        class="bi bi-arrow-right"></i></button>
+                            </div>
+                            <div class="table-responsive admin-table">
+                                <table class="table table-dark table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Program</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="rounded-circle bg-secondary opacity-50"
+                                                        style="width: 32px; height: 32px;"></div>
+                                                    <span>Michael Chen</span>
+                                                </div>
+                                            </td>
+                                            <td>Full Stack Web Dev</td>
+                                            <td>Oct 12, 2026</td>
+                                            <td><span class="status-badge status-active">Approved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-secondary border-0"><i
+                                                        class="bi bi-three-dots-vertical"></i></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="rounded-circle bg-secondary opacity-50"
+                                                        style="width: 32px; height: 32px;"></div>
+                                                    <span>Sarah Johnson</span>
+                                                </div>
+                                            </td>
+                                            <td>Data Science</td>
+                                            <td>Oct 11, 2026</td>
+                                            <td><span class="status-badge status-pending">Pending</span></td>
+                                            <td><button class="btn btn-sm btn-outline-secondary border-0"><i
+                                                        class="bi bi-three-dots-vertical"></i></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="rounded-circle bg-secondary opacity-50"
+                                                        style="width: 32px; height: 32px;"></div>
+                                                    <span>David Smith</span>
+                                                </div>
+                                            </td>
+                                            <td>UI/UX Design</td>
+                                            <td>Oct 10, 2026</td>
+                                            <td><span class="status-badge status-active">Approved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-secondary border-0"><i
+                                                        class="bi bi-three-dots-vertical"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            gsap.from(".stat-card-admin", { duration: 0.8, y: 30, opacity: 0, stagger: 0.1, ease: "power2.out" });
+            gsap.from(".admin-table-container", { duration: 0.8, y: 30, opacity: 0, delay: 0.4, ease: "power2.out" });
+            gsap.from(".sidebar", { duration: 1, x: -50, opacity: 0, ease: "power2.out" });
+        });
+    </script>
+</body>
+
+</html>

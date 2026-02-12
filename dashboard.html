@@ -1,32 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - TechBootcamp</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        .dashboard-container { background: var(--midnight-blue); min-height: 100vh; }
-        .sidebar { background: rgba(10, 16, 36, 0.95); min-height: 100vh; border-right: 1px solid rgba(245, 247, 251, 0.1); }
-        .main-content { padding: 2rem; }
-        .stat-card-dash { background: rgba(245, 247, 251, 0.05); border: 1px solid rgba(245, 247, 251, 0.1); border-radius: 15px; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .progress-ring { transform: rotate(-90deg); }
-        .progress-ring-circle { stroke: var(--neon-teal); stroke-width: 4; fill: none; }
-        .course-card-dash { background: rgba(245, 247, 251, 0.05); border: 1px solid rgba(245, 247, 251, 0.1); border-radius: 15px; padding: 1.5rem; margin-bottom: 1rem; transition: all 0.3s ease; }
-        .course-card-dash:hover { border-color: var(--neon-teal); transform: translateY(-3px); }
-        .assignment-item { background: rgba(245, 247, 251, 0.05); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
-        .nav-link-dash { color: rgba(245, 247, 251, 0.8); padding: 1rem; border-radius: 10px; transition: all 0.3s ease; }
-        .nav-link-dash:hover, .nav-link-dash.active { background: rgba(0, 229, 196, 0.1); color: var(--neon-teal); }
-        .user-avatar { width: 40px; height: 40px; background: var(--neon-teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--midnight-blue); font-weight: bold; }
+        .dashboard-container {
+            background: var(--midnight-blue);
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: rgba(10, 16, 36, 0.95);
+            min-height: 100vh;
+            border-right: 1px solid rgba(245, 247, 251, 0.1);
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .stat-card-dash {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            stroke: var(--neon-teal);
+            stroke-width: 4;
+            fill: none;
+        }
+
+        .course-card-dash {
+            background: rgba(245, 247, 251, 0.05);
+            border: 1px solid rgba(245, 247, 251, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .course-card-dash:hover {
+            border-color: var(--neon-teal);
+            transform: translateY(-3px);
+        }
+
+        .assignment-item {
+            background: rgba(245, 247, 251, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-link-dash {
+            color: rgba(245, 247, 251, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link-dash:hover,
+        .nav-link-dash.active {
+            background: rgba(0, 229, 196, 0.1);
+            color: var(--neon-teal);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--neon-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--midnight-blue);
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
     <div class="dashboard-container">
         <div class="container-fluid">
@@ -40,7 +108,7 @@
                                 <h5 class="text-white mt-2">TechBootcamp</h5>
                             </a>
                         </div>
-                        
+
                         <nav class="nav flex-column">
                             <a href="#" class="nav-link-dash active"><i class="bi bi-grid me-2"></i>Dashboard</a>
                             <a href="#" class="nav-link-dash"><i class="bi bi-book me-2"></i>My Courses</a>
@@ -50,8 +118,10 @@
                             <a href="#" class="nav-link-dash"><i class="bi bi-award me-2"></i>Certificates</a>
                             <a href="#" class="nav-link-dash"><i class="bi bi-credit-card me-2"></i>Payments</a>
                             <a href="#" class="nav-link-dash"><i class="bi bi-gear me-2"></i>Settings</a>
+                            <a href="index.html" class="nav-link-dash mt-3 text-danger"><i
+                                    class="bi bi-box-arrow-left me-2"></i>Logout</a>
                         </nav>
-                        
+
                         <div class="mt-auto pt-4">
                             <div class="d-flex align-items-center">
                                 <div class="user-avatar me-2">JD</div>
@@ -63,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Main Content -->
                 <div class="col-md-9 col-lg-10">
                     <div class="main-content">
@@ -75,14 +145,16 @@
                                 <button class="btn btn-outline-light btn-sm"><i class="bi bi-bell"></i></button>
                             </div>
                         </div>
-                        
+
                         <!-- Stats Overview -->
                         <div class="row mb-4">
                             <div class="col-md-3">
                                 <div class="stat-card-dash text-center">
                                     <svg width="80" height="80" class="progress-ring">
-                                        <circle cx="40" cy="40" r="35" stroke="rgba(245, 247, 251, 0.1)" stroke-width="4" fill="none"/>
-                                        <circle class="progress-ring-circle" cx="40" cy="40" r="35" stroke-dasharray="220" stroke-dashoffset="66"/>
+                                        <circle cx="40" cy="40" r="35" stroke="rgba(245, 247, 251, 0.1)"
+                                            stroke-width="4" fill="none" />
+                                        <circle class="progress-ring-circle" cx="40" cy="40" r="35"
+                                            stroke-dasharray="220" stroke-dashoffset="66" />
                                     </svg>
                                     <h5 class="text-white mt-2">78%</h5>
                                     <small class="text-muted">Overall Progress</small>
@@ -97,7 +169,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="stat-card-dash text-center">
-                                    <i class="bi bi-calendar-check" style="font-size: 2.5rem; color: var(--neon-teal);"></i>
+                                    <i class="bi bi-calendar-check"
+                                        style="font-size: 2.5rem; color: var(--neon-teal);"></i>
                                     <h5 class="text-white mt-2">2</h5>
                                     <small class="text-muted">Assignments Due</small>
                                 </div>
@@ -110,7 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- My Courses -->
                         <div class="row">
                             <div class="col-lg-8">
@@ -121,21 +194,23 @@
                                             <h5 class="text-white">Full Stack Web Development</h5>
                                             <p class="text-muted mb-2">React, Node.js, MongoDB</p>
                                             <div class="progress" style="height: 8px;">
-                                                <div class="progress-bar" style="width: 75%; background: var(--neon-teal);"></div>
+                                                <div class="progress-bar"
+                                                    style="width: 75%; background: var(--neon-teal);"></div>
                                             </div>
                                             <small class="text-muted">75% Complete</small>
                                         </div>
                                         <button class="btn btn-primary btn-sm">Continue</button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="course-card-dash">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h5 class="text-white">Data Science Fundamentals</h5>
                                             <p class="text-muted mb-2">Python, ML, Statistics</p>
                                             <div class="progress" style="height: 8px;">
-                                                <div class="progress-bar" style="width: 60%; background: var(--neon-teal);"></div>
+                                                <div class="progress-bar"
+                                                    style="width: 60%; background: var(--neon-teal);"></div>
                                             </div>
                                             <small class="text-muted">60% Complete</small>
                                         </div>
@@ -143,7 +218,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Assignments -->
                             <div class="col-lg-4">
                                 <h4 class="text-white mb-3">Upcoming Assignments</h4>
@@ -172,12 +247,13 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        gsap.from(".stat-card-dash", {duration: 0.8, y: 30, opacity: 0, stagger: 0.1});
-        gsap.from(".course-card-dash", {duration: 0.8, x: -30, opacity: 0, stagger: 0.2, delay: 0.3});
+        gsap.from(".stat-card-dash", { duration: 0.8, y: 30, opacity: 0, stagger: 0.1 });
+        gsap.from(".course-card-dash", { duration: 0.8, x: -30, opacity: 0, stagger: 0.2, delay: 0.3 });
     </script>
 </body>
+
 </html>
