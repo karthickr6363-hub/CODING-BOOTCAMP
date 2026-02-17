@@ -96,6 +96,8 @@ body {
 
 /* Hero Section */
 .hero-section {
+    padding-top: 80px;
+    /* Base padding to clear fixed navbar */
     min-height: 100vh;
     display: flex;
     align-items: center;
