@@ -222,19 +222,34 @@ body {
 
 /* Stats Section */
 .stat-card {
-    padding: 2rem;
+    background: rgba(245, 247, 251, 0.05);
+    border: 1px solid rgba(245, 247, 251, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem 1.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--neon-teal);
+    background: rgba(0, 229, 196, 0.05);
+    box-shadow: 0 20px 40px rgba(0, 229, 196, 0.1);
 }
 
 .stat-number {
-    font-size: 4rem;
-    font-weight: bold;
+    font-size: 3rem;
+    font-weight: 800;
     color: var(--neon-teal);
     margin-bottom: 0.5rem;
+    display: block;
 }
 
 .stat-label {
     font-size: 1.1rem;
     color: var(--cloud-white);
+    opacity: 0.8;
 }
 
 /* Testimonials */
