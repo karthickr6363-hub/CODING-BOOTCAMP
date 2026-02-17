@@ -96,13 +96,22 @@ body {
 
 /* Hero Section */
 .hero-section {
-    padding-top: 80px;
-    /* Base padding to clear fixed navbar */
+    padding-top: 100px;
+    /* Increased to ensure clearance */
+    padding-bottom: 50px;
     min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
     background: linear-gradient(135deg, var(--midnight-blue) 0%, #1A2347 100%);
+}
+
+@media (max-width: 991.98px) {
+    .hero-section {
+        min-height: auto;
+        display: block;
+        /* Disable flex centering on mobile to allow natural flow */
+    }
 }
 
 .hero-content h1 {
