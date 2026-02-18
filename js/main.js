@@ -1,7 +1,7 @@
 // Main JavaScript for TechBootcamp Website
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeAnimations();
     initializeCounters();
     initializeScrollEffects();
@@ -117,7 +117,7 @@ function initializeCounters() {
 // Scroll Effects
 function initializeScrollEffects() {
     // Navbar background on scroll
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
             navbar.style.backgroundColor = 'rgba(10, 16, 36, 0.98)';
@@ -128,7 +128,7 @@ function initializeScrollEffects() {
 
     // Fade in elements on scroll
     const fadeElements = document.querySelectorAll('.fade-in');
-    
+
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -151,7 +151,7 @@ function initializeCarousel() {
             // Add animation to the new slide
             const newSlide = e.relatedTarget;
             const content = newSlide.querySelector('.testimonial-content');
-            
+
             gsap.from(content, {
                 duration: 0.6,
                 y: 30,
@@ -163,19 +163,19 @@ function initializeCarousel() {
 }
 
 // Button Hover Effects
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.btn-primary');
-    
+
     buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
+        button.addEventListener('mouseenter', function () {
             gsap.to(this, {
                 duration: 0.3,
                 scale: 1.05,
                 ease: 'power2.out'
             });
         });
-        
-        button.addEventListener('mouseleave', function() {
+
+        button.addEventListener('mouseleave', function () {
             gsap.to(this, {
                 duration: 0.3,
                 scale: 1,
@@ -186,21 +186,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Mobile Dropdown Fix
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Handle mobile dropdown clicks more reliably
     const dropdownToggles = document.querySelectorAll('.navbar-nav .dropdown-toggle');
-    
+
     dropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
+        toggle.addEventListener('click', function (e) {
             // Only apply custom behavior on mobile devices
             if (window.innerWidth <= 991.98) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 const dropdown = this.parentElement;
                 const dropdownMenu = dropdown.querySelector('.dropdown-menu');
                 const isShowing = dropdown.classList.contains('show');
-                
+
                 // Close all other dropdowns first
                 document.querySelectorAll('.navbar-nav .dropdown').forEach(otherDropdown => {
                     if (otherDropdown !== dropdown) {
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 });
-                
+
                 // Toggle current dropdown with proper state management
                 if (!isShowing) {
                     dropdown.classList.add('show');
@@ -234,10 +234,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Handle window resize to reset mobile dropdown states
     let resizeTimeout;
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
             if (window.innerWidth > 991.98) {
@@ -252,9 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 250);
     });
-    
+
     // Close dropdowns when clicking outside on mobile
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         if (window.innerWidth <= 991.98) {
             const navbar = document.querySelector('.navbar');
             if (!navbar.contains(e.target)) {
@@ -290,12 +290,12 @@ function validateForm(formId) {
     const form = document.getElementById(formId);
     if (!form) return;
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         let isValid = true;
         const requiredFields = form.querySelectorAll('[required]');
-        
+
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 isValid = false;
@@ -319,7 +319,7 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
-    
+
     // Style the notification
     Object.assign(notification.style, {
         position: 'fixed',
@@ -375,12 +375,12 @@ function hideLoading(element) {
 
 
 // Mobile Menu Enhancement
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const navbarToggler = document.querySelector('.navbar-toggler');
     const navbarCollapse = document.querySelector('.navbar-collapse');
-    
+
     if (navbarToggler && navbarCollapse) {
-        navbarToggler.addEventListener('click', function() {
+        navbarToggler.addEventListener('click', function () {
             setTimeout(() => {
                 if (navbarCollapse.classList.contains('show')) {
                     document.body.style.overflow = 'hidden';
@@ -390,8 +390,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         });
 
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        // Close mobile menu when clicking on a regular link (not dropdowns)
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link:not(.dropdown-toggle)');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 const bsCollapse = new bootstrap.Collapse(navbarCollapse, {

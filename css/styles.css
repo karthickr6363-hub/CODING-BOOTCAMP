@@ -585,6 +585,7 @@ body {
     position: relative;
     padding-top: 3.5rem;
     /* Space for the badge on mobile */
+    text-align: center;
 }
 
 .badge-featured {
@@ -611,6 +612,7 @@ body {
     font-size: 0.9rem;
     flex-wrap: wrap;
     /* Prevent overflow on small screens */
+    justify-content: center;
 }
 
 .program-body {
@@ -626,14 +628,15 @@ body {
 .program-features li {
     color: rgba(245, 247, 251, 0.8);
     margin-bottom: 0.5rem;
-    padding-left: 1.5rem;
+    padding-left: 0;
     position: relative;
+    text-align: center;
 }
 
 .program-features li::before {
     content: '✓';
-    position: absolute;
-    left: 0;
+    position: static;
+    margin-right: 0.5rem;
     color: var(--neon-teal);
 }
 
@@ -748,6 +751,7 @@ body {
 .testimonial-header {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 1rem;
 }
 
@@ -778,6 +782,7 @@ body {
 .rating {
     display: flex;
     gap: 0.25rem;
+    justify-content: center;
     margin-bottom: 1rem;
 }
 
